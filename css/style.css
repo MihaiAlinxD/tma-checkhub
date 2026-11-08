@@ -663,3 +663,7 @@ main p,.section-intro,.ac-updates p,.why-item p,.ac-feature p{color:var(--tma-su
   .back-to-top {transition:none!important}
   .app-card .auto-art,.app-card .house-art {transition:none!important}
 }
+
+/* v25: Official AutoCheck icon in homepage app card */
+.app-card .app-icon.auto-icon{background:transparent;overflow:hidden;padding:0}
+.app-card .app-icon.auto-icon img{display:block;width:100%;height:100%;object-fit:contain}
