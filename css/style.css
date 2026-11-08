@@ -542,129 +542,56 @@ main p,.section-intro,.why-item p,.ac-feature p,.ac-updates p,.ac-faq p,
 }
 
 
-/* v18: desktop contrast and unified reference-image background */
-:root{color-scheme:dark;--surface-dark:#0a2044;--surface-card:#102b55;--text-light:#f5f9ff;--text-soft:#d3e2f6}
-html,body{background:#061833!important}
+
+/* v21 STABILIZATION: single authoritative desktop/mobile layer.
+   Replaces obsolete v18, v19 and v20 experiments. */
+:root{--tma-bg:#061632;--tma-panel:#102e5b;--tma-fg:#f7fbff;--tma-subtle:#d6e6fb;--tma-cyan:#22e8ed}
+html{background:var(--tma-bg)}
 body,body.autocheck-page,body.info-page{
- background:radial-gradient(ellipse 58% 36% at 86% 13%,rgba(23,76,167,.35),transparent 76%),radial-gradient(ellipse 54% 40% at 5% 68%,rgba(19,55,125,.30),transparent 80%),linear-gradient(150deg,#06162f 0%,#0b2551 48%,#071b39 100%) fixed!important;
- color:#f5f9ff!important
+ background-color:var(--tma-bg)!important;
+ background-image:radial-gradient(ellipse 72% 26% at 92% 9%,rgba(26,93,215,.56),transparent 79%),radial-gradient(ellipse 58% 30% at 1% 53%,rgba(24,69,170,.38),transparent 82%),radial-gradient(ellipse 62% 24% at 88% 86%,rgba(17,62,155,.34),transparent 80%),linear-gradient(150deg,#061632 0%,#092653 47%,#061733 100%)!important;
+ background-repeat:no-repeat!important;color:var(--tma-fg)!important;
 }
-/* Never allow an old white section background to remain in desktop layout. */
-body main,body main>section,body main>section>.container,body .section,body .apps-section,body .why-section,body .ac-intro,body .ac-features,body .ac-screens,body .ac-pricing,body .ac-faq,body .ac-updates{background-color:transparent!important}
-body .why-panel,body .ac-info-panel,body .ac-faq .ac-info-panel,body .ac-updates .ac-info-panel,
-body .info-inner,body .info-inner-refined,body .policy-block,body .contact-panel,body .about-panel,
-body .legal-doc-group,body .app-card,body .ac-feature{
- background:linear-gradient(145deg,#12315e 0%,#0b2146 100%)!important;
- color:#f5f9ff!important;border-color:#35649c!important
-}
-body .why-panel *,body .ac-info-panel *,body .ac-faq .ac-info-panel *,body .ac-updates .ac-info-panel *{color:#e7f2ff!important}
-body .ac-faq .ac-info-panel details{background:#0c244c!important;border:1px solid #315b92!important}
-body .ac-faq .ac-info-panel summary{color:#fff!important}
-body .ac-faq .ac-info-panel details p{color:#d3e2f6!important}
-body .why-panel h2,body .why-panel h3,body .why-panel .why-item h3,body .ac-info-panel h2{color:#fff!important}
-body .why-panel .why-item p,body .ac-info-panel p{color:#d3e2f6!important}
-body .ac-screens .ac-shot,body .ac-screens .ac-shot strong{color:#f5f9ff!important}
-body .ac-screens .ac-shot img{display:block!important;opacity:1!important;visibility:visible!important;filter:none!important}
-body .ac-pricing .ac-plan-grid>.ac-plan{background:linear-gradient(145deg,#102e5b,#081f43)!important;color:#f5f9ff!important}
-body .ac-pricing .ac-plan-grid>.ac-plan .ac-benefits li,
-body .ac-pricing .ac-plan-grid>.ac-plan .ac-vehicle-count,
-body .ac-pricing .ac-plan-grid>.ac-plan .ac-benefits-heading{color:#e0edff!important}
-body .ac-pricing .ac-period-option-inner{background:#0b2348!important;color:#f5f9ff!important;border-color:#668bc0!important}
-body .ac-pricing .ac-period-option input:checked+.ac-period-option-inner{background:#11516d!important;border-color:#2be5e7!important}
-body .ac-pricing .ac-period-option-inner strong,body .ac-pricing .ac-period-option-inner b,body .ac-pricing .ac-period-option-inner small{color:#fff!important}
-body .ac-pricing .ac-pricing-notes,body .ac-pricing .ac-pricing-notes p{color:#d5e4f6!important}
-/* Desktop spacing and readable type; keep existing 2x2 grid. */
-@media(min-width:761px){
- body main .section{padding-top:65px;padding-bottom:65px}
- body .ac-plan-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:20px!important}
- body .ac-plan-grid>.ac-plan{min-width:0!important}
- body .ac-faq .ac-info-panel{padding:30px!important}
- body .why-panel{padding:48px!important}
- body .ac-pricing .ac-benefits li{font-size:.94rem!important;line-height:1.5!important}
-}
-@media(max-width:760px){body .ac-plan-grid{grid-template-columns:1fr!important}}
-
-
-/* v19 - AutoCheck reference design: deep navy / bright cyan, 3 equal plans */
-:root{--tma-navy:#061635;--tma-blue:#0c2b65;--tma-cyan:#12e3eb}
-html,body{background:#061635!important}
-body,body.autocheck-page,body.info-page{
- background:radial-gradient(ellipse 58% 46% at 95% 20%,rgba(21,82,190,.35),transparent 76%),radial-gradient(ellipse 48% 38% at 4% 83%,rgba(18,61,150,.26),transparent 80%),linear-gradient(135deg,#061633 0%,#08214b 48%,#061635 100%) fixed!important;
- color:#f5f9ff!important
-}
-/* Wide desktop: three equal cards, no custom card */
-@media(min-width:1080px){
- #pricing .ac-plan-grid,body .ac-plan-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;max-width:1180px!important;gap:18px!important}
- #pricing .ac-plan-grid>.ac-plan{padding:21px!important;min-height:398px!important;grid-template-rows:76px 137px 1fr!important}
- #pricing .ac-plan-grid>.ac-plan.is-selected{padding:20px!important}
- #pricing .ac-card-head{padding-left:58px!important}
- #pricing .ac-card-head::before{width:44px;height:44px}
-}
-@media(min-width:761px) and (max-width:1079px){
- #pricing .ac-plan-grid,body .ac-plan-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important;max-width:100%!important}
- #pricing .ac-plan-grid>.ac-plan{padding:15px!important;min-height:420px!important;grid-template-rows:78px 145px 1fr!important}
- #pricing .ac-plan-grid>.ac-plan.is-selected{padding:14px!important}
- #pricing .ac-card-head{padding-left:49px!important}
- #pricing .ac-card-head::before{width:40px;height:40px}
- #pricing .ac-card-head h3{font-size:1.16rem!important}
-}
-@media(max-width:760px){#pricing .ac-plan-grid,body .ac-plan-grid{grid-template-columns:1fr!important;max-width:560px!important}}
-/* Legibility overrides old cascading dark theme rules. */
-#pricing .ac-plan-grid>.ac-plan,body .ac-pricing .ac-plan-grid>.ac-plan{
- background:linear-gradient(145deg,#0e3066 0%,#071c40 100%)!important;
- border:1.5px solid #347bd0!important;color:#fff!important;
- box-shadow:0 14px 30px rgba(0,6,30,.35)!important
-}
-#pricing .ac-plan-grid>.ac-plan.ac-plan-featured{border:2px solid #ae65ef!important}
-#pricing .ac-plan-grid>.ac-plan.is-selected{border:2px solid #12e3eb!important;box-shadow:0 0 0 2px rgba(18,227,235,.19),0 14px 30px rgba(0,6,30,.4)!important}
-#pricing .ac-card-head h3{color:#fff!important;font-weight:800!important}
-#pricing .ac-card-head .ac-vehicle-count,#pricing .ac-benefits-heading,#pricing .ac-period-options legend{color:#f1f7ff!important;font-weight:700!important}
-#pricing .ac-card-benefits .ac-benefits li,body .ac-pricing .ac-benefits li{color:#f1f7ff!important;font-size:.91rem!important;line-height:1.45!important;font-weight:500!important}
-#pricing .ac-price-free{color:#fff!important;font-weight:800!important}
-#pricing .ac-card-benefits{border-top:1px solid #4d78ac!important}
-#pricing .ac-period-option-inner,body .ac-pricing .ac-period-option-inner{background:#0b224b!important;border:1.5px solid #7497ca!important;color:#fff!important;min-height:94px!important}
-#pricing .ac-period-option-inner strong,#pricing .ac-period-option-inner b,#pricing .ac-period-option-inner small{color:#fff!important;opacity:1!important}
-#pricing .ac-period-option input:checked+.ac-period-option-inner,body .ac-pricing .ac-period-option input:checked+.ac-period-option-inner{background:#104a69!important;border:2px solid #12e3eb!important}
-#pricing .ac-benefits li::before{color:#12f0eb!important}
-#pricing .ac-pricing-notes,#pricing .ac-pricing-notes p{color:#dceaff!important}
-
-
-/* v20 — clear typography and visible reference-style blue glow */
-html{background:#051632!important}
-body,body.autocheck-page,body.info-page{
- background-color:#061936!important;
- background-image:radial-gradient(ellipse 68% 29% at 91% 8%,rgba(23,99,228,.63) 0%,rgba(13,58,143,.32) 42%,transparent 78%),radial-gradient(ellipse 62% 28% at 0% 48%,rgba(24,77,185,.45),transparent 78%),radial-gradient(ellipse 62% 32% at 88% 83%,rgba(18,70,170,.43),transparent 77%),linear-gradient(145deg,#05142f 0%,#09275b 42%,#061b40 76%,#05152e 100%)!important;
- background-attachment:scroll!important;
- background-repeat:no-repeat!important;
- color:#f7fbff!important;
-}
-/* All pricing copy must remain legible, regardless of previous legacy rules. */
-#pricing .ac-plan-grid>.ac-plan{background:linear-gradient(150deg,#123c78 0%,#0a295b 55%,#071e45 100%)!important;border:2px solid #468de2!important;color:#fff!important;opacity:1!important;filter:none!important}
-#pricing .ac-plan-grid>.ac-plan.ac-plan-featured{border-color:#bd7aff!important}
-#pricing .ac-plan-grid>.ac-plan.is-selected{border-color:#14edf0!important}
-#pricing .ac-plan-grid>.ac-plan .ac-card-head,#pricing .ac-plan-grid>.ac-plan .ac-card-head *,
-#pricing .ac-plan-grid>.ac-plan .ac-card-pricing,#pricing .ac-plan-grid>.ac-plan .ac-card-pricing legend,
-#pricing .ac-plan-grid>.ac-plan .ac-card-benefits,#pricing .ac-plan-grid>.ac-plan .ac-card-benefits *,
-#pricing .ac-plan-grid>.ac-plan .ac-price-free{
- color:#f8fbff!important;opacity:1!important;filter:none!important;text-shadow:none!important;
-}
-#pricing .ac-plan-grid>.ac-plan .ac-card-head h3{font-size:1.4rem!important;font-weight:850!important;color:#fff!important}
-#pricing .ac-plan-grid>.ac-plan .ac-vehicle-count{font-size:.93rem!important;font-weight:700!important;color:#e1eeff!important}
-#pricing .ac-plan-grid>.ac-plan .ac-price-free{font-size:1.1rem!important;font-weight:850!important;color:#fff!important}
-#pricing .ac-plan-grid>.ac-plan .ac-benefits-heading,#pricing .ac-plan-grid>.ac-plan .ac-period-options legend{font-size:.96rem!important;font-weight:800!important;color:#fff!important}
-#pricing .ac-plan-grid>.ac-plan .ac-benefits li{font-size:.91rem!important;line-height:1.52!important;font-weight:600!important;color:#f5faff!important}
-#pricing .ac-plan-grid>.ac-plan .ac-benefits li::before{color:#16f3e8!important}
-#pricing .ac-plan-grid>.ac-plan .ac-card-benefits{border-top:1px solid #668fca!important}
-#pricing .ac-plan-grid>.ac-plan .ac-period-option-inner{background:#0a214a!important;border:1.5px solid #83a7df!important;color:#fff!important;opacity:1!important}
-#pricing .ac-plan-grid>.ac-plan .ac-period-option input:checked+.ac-period-option-inner{background:#0c5673!important;border:2px solid #16eff0!important}
-#pricing .ac-plan-grid>.ac-plan .ac-period-option-inner strong,#pricing .ac-plan-grid>.ac-plan .ac-period-option-inner b{color:#fff!important;opacity:1!important}
-#pricing .ac-plan-grid>.ac-plan .ac-period-option-inner small{color:#d8ecff!important;opacity:1!important}
-#pricing .ac-plan-grid>.ac-plan .ac-recommend{color:#fff!important;opacity:1!important}
-#pricing .ac-pricing-notes p{color:#e2eeff!important;opacity:1!important}
-@media(min-width:761px){#pricing .ac-plan-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:18px!important}#pricing .ac-plan-grid>.ac-plan{min-height:405px!important}}
+/* Every content surface follows the same midnight palette. */
+main,main>section,.section,.ac-intro,.ac-features,.ac-screens,.ac-pricing,.ac-faq,.ac-updates,.apps-section,.why-section,.about-section,.contact-section,.info-page main{background:transparent!important;color:var(--tma-fg)!important}
+main h1,main h2,main h3,main h4,.why-panel h2,.why-panel h3,.ac-info-panel h2{color:#fff!important}
+main p,.section-intro,.ac-updates p,.why-item p,.ac-feature p{color:var(--tma-subtle)!important}
+.why-panel,.ac-info-panel,.ac-faq .ac-info-panel,.ac-updates .ac-info-panel,.contact-panel,.about-panel,.app-card,.ac-feature,.legal-doc-group,.info-inner,.info-inner-refined,.policy-block{background:linear-gradient(145deg,#143565,#0b2249)!important;border-color:#38669e!important;color:#f7fbff!important}
+.why-panel p,.ac-info-panel p,.app-card p,.ac-feature p,.info-inner p,.info-inner li{color:#d7e6f8!important}
+.ac-faq details{background:#0c2853!important;border:1px solid #40699e!important}
+.ac-faq summary{color:#fff!important}.ac-faq details p{color:#d8e9ff!important}
+.ac-shot img{display:block;opacity:1!important;visibility:visible!important;filter:none!important}
+/* Three readable, equal-width plans on desktop. */
+#pricing .ac-plan-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:18px!important;max-width:1180px!important;align-items:stretch!important}
+#pricing .ac-plan-grid>.ac-plan{display:flex!important;flex-direction:column!important;gap:14px!important;min-width:0!important;min-height:405px!important;padding:23px!important;background:linear-gradient(145deg,#143d77,#0a2856 70%,#081f46)!important;border:2px solid #4b8bd3!important;border-radius:18px!important;color:#fff!important;opacity:1!important;visibility:visible!important;filter:none!important}
+#pricing .ac-plan-grid>.ac-plan.ac-plan-featured{border-color:#b777f5!important}
+#pricing .ac-plan-grid>.ac-plan.is-selected{border-color:#1be9ef!important;padding:23px!important;box-shadow:0 0 0 3px #15d9e92c,0 12px 30px #020c2177!important}
+#pricing .ac-card-head{min-height:67px!important;flex:none!important}
+#pricing .ac-card-head h3{font-size:1.32rem!important;line-height:1.2!important;color:#fff!important;opacity:1!important}
+#pricing .ac-card-head .ac-vehicle-count{font-size:.9rem!important;font-weight:700!important;color:#dceaff!important;opacity:1!important}
+#pricing .ac-card-pricing{min-height:102px!important;display:flex!important;align-items:center!important;color:#fff!important}
+#pricing .ac-price-free{color:#fff!important;font-size:1.12rem!important;line-height:1.4!important}
+#pricing .ac-period-options{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;width:100%!important}
+#pricing .ac-period-options legend{color:#fff!important;font-size:.91rem!important;font-weight:800!important}
+#pricing .ac-period-option-inner{min-height:94px!important;padding:11px!important;background:#0b234d!important;border:1.5px solid #82a7dd!important;color:#fff!important}
+#pricing .ac-period-option input:checked+.ac-period-option-inner{padding:10.5px!important;background:#0d526e!important;border:2px solid #21edf0!important}
+#pricing .ac-period-option-inner strong,#pricing .ac-period-option-inner b{color:#fff!important;opacity:1!important}
+#pricing .ac-period-option-inner small{color:#d8eaff!important;opacity:1!important}
+#pricing .ac-card-benefits{flex:1!important;min-height:0!important;padding-top:13px!important;border-top:1px solid #6288bc!important}
+#pricing .ac-benefits-heading{color:#fff!important;font-size:.96rem!important;font-weight:800!important}
+#pricing .ac-card-benefits .ac-benefits{gap:7px!important}
+#pricing .ac-card-benefits .ac-benefits li{color:#f3f9ff!important;font-size:.9rem!important;font-weight:550!important;line-height:1.48!important;opacity:1!important}
+#pricing .ac-benefits li:before{color:#22f1ec!important}
+#pricing .ac-pricing-notes,#pricing .ac-pricing-notes p{color:#d9e8fb!important}
+#pricing .ac-plan-grid>.ac-plan:focus-visible{outline:3px solid #7cf5f6!important;outline-offset:3px}
+#pricing .ac-period-option input:focus-visible+.ac-period-option-inner{outline:3px solid #7cf5f6!important;outline-offset:2px}
+@media(min-width:761px) and (max-width:1050px){#pricing .ac-plan-grid{gap:12px!important}#pricing .ac-plan-grid>.ac-plan{padding:16px!important}#pricing .ac-plan-grid>.ac-plan.is-selected{padding:16px!important}#pricing .ac-period-option-inner{padding:8px!important}#pricing .ac-period-option input:checked+.ac-period-option-inner{padding:7.5px!important}}
 @media(max-width:760px){
- body,body.autocheck-page,body.info-page{background-image:radial-gradient(ellipse 105% 23% at 100% 4%,rgba(28,99,218,.55),transparent 82%),radial-gradient(ellipse 95% 30% at 0% 62%,rgba(17,68,162,.43),transparent 80%),linear-gradient(155deg,#051630,#0b2858 45%,#061936 100%)!important}
- #pricing .ac-plan-grid{grid-template-columns:1fr!important;gap:16px!important}
- #pricing .ac-plan-grid>.ac-plan{min-height:0!important;padding:20px!important}
- #pricing .ac-plan-grid>.ac-plan .ac-benefits li{font-size:.95rem!important}
+ body,body.autocheck-page,body.info-page{background-image:radial-gradient(ellipse 120% 23% at 100% 6%,rgba(27,94,210,.4),transparent 83%),radial-gradient(ellipse 100% 35% at 0% 60%,rgba(22,70,165,.24),transparent 80%),linear-gradient(160deg,#061632,#0a2450 52%,#061733)!important}
+ #pricing .ac-plan-grid{grid-template-columns:1fr!important;gap:15px!important;max-width:560px!important}
+ #pricing .ac-plan-grid>.ac-plan{min-height:0!important;padding:19px!important;gap:12px!important}
+ #pricing .ac-plan-grid>.ac-plan.is-selected{padding:19px!important}
+ #pricing .ac-card-head{min-height:57px!important}
+ #pricing .ac-card-pricing{min-height:0!important}
+ #pricing .ac-card-benefits .ac-benefits li{font-size:.94rem!important}
 }
