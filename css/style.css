@@ -347,3 +347,30 @@
 #pricing .ac-plan-grid>.ac-plan .ac-custom-contact{display:flex!important;grid-column:auto!important;grid-row:auto!important;align-items:center!important;justify-content:center!important;align-self:stretch!important;justify-self:stretch!important;width:auto!important;min-width:0!important;margin:auto 0 0!important;padding:12px!important;border-radius:10px!important;background:#087f93!important;color:#fff!important;text-align:center!important;font-size:.88rem!important;text-decoration:none!important;font-weight:800!important}
 #pricing .ac-plan-grid>.ac-plan .ac-custom-contact:hover{background:#07677b!important}
 @media(max-width:700px){#pricing .ac-plan-grid{grid-template-columns:1fr!important;max-width:520px!important;gap:13px!important}#pricing .ac-plan-grid>.ac-plan{padding:18px!important}#pricing .ac-plan-grid>.ac-plan.is-selected{padding:17px!important}}
+
+
+/* TMA CheckHub AutoCheck pricing v14 — symmetrical 2 × 2, existing light theme */
+#pricing .ac-plan-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:20px!important;max-width:1080px!important;align-items:stretch!important}
+#pricing .ac-plan-grid>.ac-plan{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:76px 145px 1fr auto!important;align-content:stretch!important;gap:10px!important;min-height:390px!important;height:100%!important;padding:24px!important;box-sizing:border-box!important;border-radius:18px!important;background:#fff!important;position:relative!important;transition:border-color .15s,box-shadow .15s!important}
+#pricing .ac-plan-grid>.ac-plan.is-selected{padding:23px!important;border:2px solid #0797a8!important}
+#pricing .ac-plan-grid>.ac-plan.ac-plan-featured{border-color:#9683ef!important}
+#pricing .ac-plan-grid>.ac-plan.ac-plan-featured.is-selected{border-color:#0797a8!important}
+#pricing .ac-card-head{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:5px;min-height:0;position:relative}
+#pricing .ac-card-head h3{font-size:1.34rem!important;line-height:1.2!important}
+#pricing .ac-card-head .ac-recommend{position:absolute;top:-16px;right:0;margin:0!important;white-space:nowrap;font-size:.65rem!important}
+#pricing .ac-card-pricing{display:flex;align-items:center;min-width:0;min-height:0}
+#pricing .ac-card-pricing>.ac-period-options{width:100%;margin:0!important;align-self:center}
+#pricing .ac-card-pricing>.ac-price-free,#pricing .ac-card-pricing>.ac-custom-price{font-size:1.13rem!important;margin:0!important}
+#pricing .ac-card-benefits{display:flex;flex-direction:column;gap:10px;min-height:0;padding-top:14px;border-top:1px solid #e5edf6}
+#pricing .ac-card-benefits>.ac-benefits-heading{margin:0!important;font-size:.92rem!important}
+#pricing .ac-card-benefits>.ac-benefits{gap:8px!important}
+#pricing .ac-card-benefits>.ac-benefits li{font-size:.88rem!important;line-height:1.45!important}
+#pricing .ac-card-pricing .ac-period-option-inner{min-height:95px!important;justify-content:center!important}
+#pricing .ac-card-pricing .ac-period-option-inner b{font-size:1.12rem!important}
+#pricing .ac-custom-contact{grid-row:4;align-self:end!important;margin:6px 0 0!important}
+#pricing .ac-plan-grid>.ac-plan[data-plan="custom"]{border-color:#b5dce3!important}
+#pricing .ac-plan-grid>.ac-plan[data-plan="custom"].is-selected{border-color:#0797a8!important}
+#pricing .ac-plan-grid>.ac-plan[data-plan="custom"] .ac-custom-price{color:#0a6b81!important}
+#pricing .ac-plan-grid>.ac-plan[data-plan="custom"] .ac-custom-contact{background:#087f93!important;color:white!important}
+@media(max-width:700px){#pricing .ac-plan-grid{grid-template-columns:1fr!important;gap:14px!important;max-width:520px!important}#pricing .ac-plan-grid>.ac-plan{grid-template-rows:auto auto auto auto!important;min-height:0!important;padding:20px!important;gap:13px!important}#pricing .ac-plan-grid>.ac-plan.is-selected{padding:19px!important}#pricing .ac-card-head{min-height:54px;padding-top:6px}#pricing .ac-card-head .ac-recommend{top:-7px}#pricing .ac-card-pricing{min-height:0}#pricing .ac-card-benefits{padding-top:12px}#pricing .ac-custom-contact{margin-top:5px!important}}
+@media(prefers-reduced-motion:reduce){#pricing .ac-plan-grid>.ac-plan{transition:none!important}}
