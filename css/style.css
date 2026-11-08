@@ -596,11 +596,70 @@ main p,.section-intro,.ac-updates p,.why-item p,.ac-feature p{color:var(--tma-su
  #pricing .ac-card-benefits .ac-benefits li{font-size:.94rem!important}
 }
 
-/* v23: fix legacy light-theme specificity for plan headings */
+
+/* v24 — visual stabilization: scoped styles, dark-theme contrast and responsive cards */
+:root {
+  --tma-panel: #102d58;
+  --tma-text: #f5f9ff;
+  --tma-muted: #d5e5fa;
+  --tma-accent: #21e2e9;
+}
 #pricing .ac-plan-grid > .ac-plan .ac-card-head h3,
 #pricing .ac-plan-grid > .ac-plan .ac-card-pricing > .ac-price-free,
-#pricing .ac-plan-grid > .ac-plan .ac-card-benefits > .ac-benefits-heading {color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important}
-#pricing .ac-plan-grid > .ac-plan .ac-card-head .ac-vehicle-count {color:#d9e9ff!important;-webkit-text-fill-color:#d9e9ff!important;opacity:1!important}
-#pricing .ac-plan-grid > .ac-plan .ac-card-benefits > .ac-benefits-heading {font-size:1rem!important;margin:0 0 10px!important}
-#pricing .ac-plan-grid > .ac-plan .ac-card-pricing > .ac-price-free {font-size:1.2rem!important}
-#pricing .ac-plan-grid > .ac-plan .ac-card-benefits .ac-benefits li {color:#f7fbff!important;-webkit-text-fill-color:#f7fbff!important}
+#pricing .ac-plan-grid > .ac-plan .ac-card-benefits > .ac-benefits-heading {
+  color:var(--tma-text)!important;
+  -webkit-text-fill-color:var(--tma-text)!important;
+  opacity:1!important;
+}
+#pricing .ac-plan-grid > .ac-plan .ac-card-head .ac-vehicle-count {
+  color:var(--tma-muted)!important;
+  -webkit-text-fill-color:var(--tma-muted)!important;
+  opacity:1!important;
+}
+#pricing .ac-plan-grid > .ac-plan .ac-card-benefits .ac-benefits li {
+  color:var(--tma-text)!important;
+  -webkit-text-fill-color:var(--tma-text)!important;
+  opacity:1!important;
+}
+#pricing .ac-plan-grid > .ac-plan .ac-card-benefits > .ac-benefits-heading {
+  font-size:1rem!important;
+  margin:0 0 10px!important;
+}
+#pricing .ac-plan-grid > .ac-plan .ac-card-pricing > .ac-price-free {
+  font-size:1.2rem!important;
+}
+#pricing .ac-period-option-inner strong,
+#pricing .ac-period-option-inner b,
+#pricing .ac-period-options legend {color:#fff!important;-webkit-text-fill-color:#fff!important}
+#pricing .ac-period-option-inner small {color:#dcecff!important}
+#pricing .ac-plan-grid > .ac-plan {height:100%;box-sizing:border-box}
+#pricing .ac-period-option-inner {box-sizing:border-box}
+#pricing .ac-plan-grid > .ac-plan .ac-period-option input:focus-visible + .ac-period-option-inner {
+  outline:3px solid #7cf5f6!important;outline-offset:2px;
+}
+.back-to-top {width:42px;height:42px;right:16px;bottom:18px;font-size:23px;z-index:70}
+@media(min-width:761px) and (max-width:1100px) {
+  #pricing .ac-plan-grid {grid-template-columns:repeat(2,minmax(0,1fr))!important;max-width:900px!important}
+  #pricing .ac-plan-grid > .ac-plan {min-height:0!important}
+  #pricing .ac-plan-grid > .ac-plan:last-child:nth-child(odd) {grid-column:1/-1;max-width:440px;width:100%;justify-self:center}
+}
+@media(max-width:760px) {
+  #pricing .ac-plan-grid {grid-template-columns:1fr!important}
+  .app-card {isolation:isolate}
+  .app-card .app-content {position:relative;z-index:2}
+  .app-card .auto-art,.app-card .house-art {
+    width:32%!important;max-width:135px!important;
+    opacity:.28!important;pointer-events:none!important;
+    transform:scale(.78)!important;transform-origin:right bottom!important;
+  }
+  .back-to-top {width:38px;height:38px;right:12px;bottom:76px;font-size:21px}
+  .app-card p {max-width:100%}
+  section {scroll-margin-top:72px}
+}
+@media(max-width:420px) {
+  .app-card .auto-art,.app-card .house-art {opacity:.18!important}
+}
+@media(prefers-reduced-motion:reduce) {
+  .back-to-top {transition:none!important}
+  .app-card .auto-art,.app-card .house-art {transition:none!important}
+}
