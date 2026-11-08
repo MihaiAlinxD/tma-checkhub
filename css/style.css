@@ -74,3 +74,20 @@
 @media(hover:hover) and (prefers-reduced-motion:no-preference){.ac-shot img:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(12,12,38,.27)}}
 @media(max-width:640px){.ac-shot{flex-basis:min(65vw,245px)}.ac-official-logo{width:min(100%,290px)}}
 @media(prefers-reduced-motion:reduce){.ac-shots{scroll-behavior:auto}.ac-shot img{transition:none}}
+
+/* AutoCheck desktop polish — mobile layout is intentionally unchanged. */
+@media (min-width: 901px) {
+  .autocheck-page .ac-hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(340px, .9fr); gap: 52px; }
+  .autocheck-page .ac-hero-grid > div { min-width: 0; }
+  .autocheck-page .ac-official-logo { width: min(100%, 400px); max-height: 153px; }
+  .autocheck-page .ac-visual { min-width: 0; }
+  .autocheck-page .ac-shots { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; overflow: visible; padding: 18px 0 26px; }
+  .autocheck-page .ac-shot { width: 100%; min-width: 0; max-width: 178px; justify-self: center; }
+  .autocheck-page .ac-shot img { width: 100%; height: auto; aspect-ratio: 760 / 1536; object-fit: contain; }
+  .autocheck-page .ac-plan-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 901px) and (max-width: 1080px) {
+  .autocheck-page .ac-shots { gap: 12px; }
+  .autocheck-page .ac-shot { max-width: 150px; }
+  .autocheck-page .ac-hero-grid { gap: 28px; }
+}
