@@ -376,95 +376,167 @@
 @media(prefers-reduced-motion:reduce){#pricing .ac-plan-grid>.ac-plan{transition:none!important}}
 
 
-/* TMA CheckHub 2026 — unified midnight/cyan design, across every page.
-   Keeps the existing HTML, pricing controls and legal content intact. */
-:root{--navy:#071832;--navy2:#0c2450;--teal:#15d6e5;--ink:#eef6ff;--muted:#b7c9e4;--line:#31517f;--tma-panel:#102751;--tma-panel2:#0c2046;--tma-border:#31588b}
-html{scroll-padding-top:90px}
-body,body.info-page,body.autocheck-page{color:#edf5ff;background:radial-gradient(ellipse at 85% 9%,rgba(35,86,184,.28),transparent 34%),linear-gradient(155deg,#07152f 0%,#0c2553 55%,#07172f 100%);background-attachment:fixed}
-.site-header{background:rgba(5,19,43,.97);border-bottom:1px solid rgba(93,154,235,.25);box-shadow:0 5px 25px rgba(0,0,0,.14)}
-.site-header .brand-icon{background:linear-gradient(135deg,#047ba4,#0b376d);box-shadow:0 0 0 1px #1cc7df55 inset}
-.nav-links a{color:#e2edff}.nav-links a:hover{color:#35e3ef}
-.language-control select,.language-trigger{background:#102953;color:#e8f4ff;border-color:#41669b}
-.section,.apps-section,.why-section,.ac-intro,.ac-features,.ac-screens,.ac-pricing,.ac-faq,.ac-updates,.info-page main,.homecheck-page main{background:transparent!important;color:#edf5ff}
-.section h2,.ac-intro h2,.ac-features h2,.ac-screens h2,.ac-pricing h2,.ac-faq h2,.ac-updates h2,.info-page .info-shell h1,.info-page .info-inner h2,.info-links h2{color:#f6f9ff!important}
-.section-intro,.ac-intro p,.ac-screens p,.ac-pricing .section-intro,.ac-faq p,.ac-updates p,.info-page .info-shell>p:not(.section-kicker){color:#b9cae5!important}
-.section-kicker,.ac-intro .section-kicker{color:#2ee5ef}
-.hero,.ac-hero{background:radial-gradient(ellipse at 76% 38%,rgba(40,98,209,.43),transparent 46%),linear-gradient(115deg,#06142e,#0b2454 70%,#07172f)}
-.hero .hero-lead,.ac-lead{color:#c7d8f5}
-.btn-primary,.ac-actions .btn-primary{background:linear-gradient(125deg,#6253e8,#9b5df2);color:#fff;box-shadow:0 9px 26px #4138bd44}
-.btn-outline{border-color:#6c91d7;color:#f1f7ff}
-.btn-dark{background:#0f4574;color:#fff}
-/* Application overview cards and feature tiles */
-.app-card,.ac-feature,.why-card,.home-feature,.homecheck-card,.info-links a,.info-links-refined a{background:linear-gradient(145deg,rgba(20,51,102,.96),rgba(9,29,67,.98))!important;color:#f3f7ff!important;border:1px solid #3865a4!important;box-shadow:0 12px 28px rgba(0,0,0,.12)!important}
-.app-card h3,.ac-feature h3,.why-card h3,.home-feature h3{color:#fff!important}
-.app-card p,.ac-feature p,.why-card p,.home-feature p,.app-card .muted{color:#c0d0eb!important}
-.ac-feature .ac-feature-icon{background:linear-gradient(135deg,#214f9a,#2c287f)!important;color:#a8b6ff!important}
-.ac-shots .ac-shot{color:#e5efff}
-.ac-shots .ac-shot img{box-shadow:0 12px 30px #010b2180}
-/* Subscription cards: consistent 2x2 desktop, one column mobile */
-#pricing .ac-plan-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important;max-width:1100px!important;margin-inline:auto}
-#pricing .ac-plan-grid>.ac-plan{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:70px 120px 1fr auto!important;min-height:380px!important;height:100%!important;gap:10px!important;padding:22px!important;border:1.5px solid #3578d6!important;border-radius:18px!important;background:linear-gradient(145deg,#112c60 0%,#0b2048 80%)!important;color:#f0f7ff!important;box-shadow:0 10px 30px rgba(0,0,0,.15)!important;align-content:stretch!important;transition:border-color .18s,box-shadow .18s,transform .18s!important}
-#pricing .ac-plan-grid>.ac-plan:hover{transform:translateY(-2px)}
-#pricing .ac-plan-grid>.ac-plan.is-selected{border:2px solid #17d9e7!important;padding:21.5px!important;box-shadow:0 0 0 2px #18cce522,0 12px 30px #020b2380!important}
-#pricing .ac-plan-grid>.ac-plan.ac-plan-featured{border-color:#a56af3!important}
-#pricing .ac-plan-grid>.ac-plan.ac-plan-featured.is-selected{border-color:#15d8e6!important}
-#pricing .ac-plan-grid>.ac-plan[data-plan="custom"]{border-color:#19cbd6!important}
-#pricing .ac-plan-grid>.ac-plan[data-plan="custom"].is-selected{border-color:#a88aff!important}
-#pricing .ac-card-head{justify-content:center;gap:4px;padding-left:66px;position:relative}
-#pricing .ac-card-head:before{position:absolute;left:0;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:49px;height:49px;border-radius:13px;background:linear-gradient(135deg,#285cbb,#34318d);font-size:25px;content:'✦';color:#cbdcff}
-#pricing [data-plan="free"] .ac-card-head:before{content:'✧'}
-#pricing [data-plan="premium"] .ac-card-head:before{content:'♛';color:#e0c4ff;background:linear-gradient(135deg,#5333a8,#6c39b8)}
-#pricing [data-plan="fleet"] .ac-card-head:before{content:'▣'}
-#pricing [data-plan="custom"] .ac-card-head:before{content:'⚙';color:#5df4f2;background:linear-gradient(135deg,#0a6899,#173d80)}
-#pricing .ac-card-head h3{color:#fff!important;font-size:1.38rem!important}
-#pricing .ac-card-head .ac-vehicle-count{color:#c7d9f3!important;font-size:.89rem!important}
-#pricing .ac-card-head .ac-recommend{background:linear-gradient(110deg,#6b44e9,#ad64f3)!important;color:white!important;top:-13px!important;right:0!important}
-#pricing .ac-card-pricing{min-height:0;align-items:center;color:#fff}
-#pricing .ac-price-free{color:#fff!important;font-size:1.23rem!important;font-weight:800!important}
-#pricing .ac-custom-price{color:#c5f8fb!important;font-size:1.12rem!important;font-weight:750!important}
-#pricing .ac-card-benefits{border-top:1px solid #38598c!important;padding-top:12px!important;gap:8px!important}
-#pricing .ac-card-benefits .ac-benefits-heading{color:#fff!important;font-weight:800}
-#pricing .ac-card-benefits .ac-benefits li{color:#d8e8ff!important;font-size:.86rem!important;line-height:1.45!important}
-#pricing .ac-benefits li:before{color:#25e0e7!important}
-#pricing .ac-period-options legend{color:#e9f4ff!important;font-size:.86rem!important}
-#pricing .ac-period-option-inner{background:#0b2148!important;border:1.5px solid #5071a5!important;color:#e7f2ff!important;border-radius:12px!important;min-height:83px!important;gap:4px!important;justify-content:center!important}
-#pricing .ac-period-option input:checked+.ac-period-option-inner{background:linear-gradient(145deg,#10467d,#0a3769)!important;border:2px solid #16d9e8!important;color:#fff!important;box-shadow:0 0 0 2px #0fd3e51f!important}
+
+/* TMA CheckHub v16: consolidated midnight theme; replaces the former stacked theme. */
+:root{--navy:#071831;--navy2:#102b54;--teal:#29dce6;--ink:#eef5ff;--muted:#c4d3ea;--line:#345781}
+html{scroll-padding-top:85px}
+body,body.autocheck-page,body.info-page{background:#081832;color:#edf5ff}
+.site-header{background:#07152c;border-bottom:1px solid #2c4b76;box-shadow:0 4px 20px #020b1c55}
+.site-header .brand-icon{background:linear-gradient(135deg,#0b91b2,#173e86)}
+.nav-links a{color:#e4efff}.nav-links a:hover{color:#42e3eb}
+.language-trigger,.language-control select{background:#132d58;border-color:#3a6090;color:#fff}
+.language-options{background:#102a52;border-color:#416493}
+.hero,.ac-hero{background:radial-gradient(ellipse at 75% 30%,#24478b 0%,transparent 48%),linear-gradient(125deg,#07152e,#132a5b 75%,#0a1938)}
+.section,.apps-section,.why-section,.about-section,.contact-section,.ac-intro,.ac-features,.ac-screens,.ac-pricing,.ac-faq,.ac-updates,.info-page main{background:transparent!important;color:#edf5ff}
+.section h2,.section h3,.info-page .info-shell h1{color:#f5f8ff}
+.section-intro,.ac-updates p,.info-page .info-shell>p:not(.section-kicker){color:#c2d2eb!important}
+.section-kicker{color:#35dce7}
+.btn-primary,.ac-actions .btn-primary{background:linear-gradient(120deg,#6359e8,#9270ef);color:#fff;box-shadow:0 8px 24px #292c7d66}
+.btn-outline{border-color:#7994d4;color:#fff}
+.btn-dark{background:#16647e;color:#fff}
+.app-card,.ac-feature,.why-panel,.contact-panel,.info-link-grid a,.legal-doc-group{background:linear-gradient(145deg,#142e5c,#0c2146)!important;border:1px solid #355c90!important;color:#edf5ff!important;box-shadow:0 12px 28px #020a1c33}
+.app-card h3,.ac-feature h3,.why-item h3,.legal-doc-group h3{color:#f5f8ff!important}
+.app-card p,.ac-feature p,.why-item p,.contact-panel p:not(.section-kicker),.legal-docs-lead{color:#c4d4ec!important}
+.why-icon,.ac-feature-icon{background:#23477e!important;color:#87e9f2!important}
+.about-panel{background:linear-gradient(130deg,#102c5a,#0b2044);border:1px solid #365c8b}
+.about-copy p,.about-brand small{color:#c8d9ed}
+.text-link,.info-link-grid a,.legal-doc-link{color:#62e5ee!important}
+.ac-shot{color:#edf5ff}.ac-shot img{box-shadow:0 12px 30px #01091988}
+/* Pricing: equal 2x2 cards with independent radio controls and visible benefits. */
+#pricing .ac-plan-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:20px!important;max-width:1080px!important;align-items:stretch!important;margin:28px auto 0!important}
+#pricing .ac-plan-grid>.ac-plan{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:78px minmax(135px,auto) 1fr auto!important;gap:12px!important;min-width:0!important;min-height:410px!important;height:100%!important;margin:0!important;padding:24px!important;border:1.5px solid #3d669f!important;border-radius:20px!important;background:linear-gradient(145deg,#152f61,#0d2147)!important;color:#edf5ff!important;box-shadow:0 12px 30px #020c2155!important;transform:none!important;box-sizing:border-box!important;cursor:pointer!important}
+#pricing .ac-plan-grid>.ac-plan.is-selected{border:2px solid #28e0e8!important;padding:23.5px!important;box-shadow:0 0 0 3px #1bd8e51f,0 12px 30px #020c2177!important}
+#pricing .ac-plan-grid>.ac-plan.ac-plan-featured{border-color:#9876ee!important}
+#pricing .ac-plan-grid>.ac-plan.ac-plan-featured.is-selected{border-color:#28e0e8!important}
+#pricing .ac-card-head{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:5px;min-height:0;padding:0 0 0 64px!important}
+#pricing .ac-card-head::before{content:'✦';position:absolute;left:0;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:13px;display:grid;place-items:center;background:#254e96;color:#b8d5ff;font-size:25px}
+#pricing [data-plan=free] .ac-card-head::before{content:'✓'}
+#pricing [data-plan=premium] .ac-card-head::before{content:'★';background:#493a9d;color:#e2d0ff}
+#pricing [data-plan=fleet] .ac-card-head::before{content:'▣'}
+#pricing [data-plan=custom] .ac-card-head::before{content:'⚙';background:#155d85;color:#80f5f5}
+#pricing .ac-card-head h3{margin:0!important;color:#fff!important;font-size:1.35rem!important}
+#pricing .ac-card-head .ac-vehicle-count{margin:0!important;color:#cbdaf2!important;font-size:.89rem!important}
+#pricing .ac-card-head .ac-recommend{position:absolute;right:0;top:-9px;margin:0!important;background:#7955db!important;color:#fff!important}
+#pricing .ac-card-pricing{display:flex;align-items:center;min-width:0;min-height:0;color:#fff!important}
+#pricing .ac-card-pricing>.ac-period-options{width:100%;margin:0!important}
+#pricing .ac-price-free,#pricing .ac-custom-price{color:#f5faff!important;font-size:1.12rem!important;font-weight:800!important}
+#pricing .ac-period-options legend{color:#e7f4ff!important;font-size:.85rem!important}
+#pricing .ac-period-option-inner{background:#102752!important;border:1.5px solid #5075a9!important;border-radius:12px!important;min-height:93px!important;padding:12px!important;color:#f3f8ff!important}
 #pricing .ac-period-option-inner strong,#pricing .ac-period-option-inner b{color:#fff!important}
-#pricing .ac-period-option-inner small{color:#c6d9f4!important}
-#pricing .ac-period-option input:focus-visible+.ac-period-option-inner{outline:3px solid #a5f9ff;outline-offset:2px}
-#pricing .ac-custom-contact{background:linear-gradient(105deg,#0bb7c9,#12d8d9)!important;color:#052b47!important;font-weight:800!important;min-height:45px!important;align-self:end!important}
-#pricing .ac-pricing-notes{color:#c4d6f0!important;max-width:1080px;margin-inline:auto}
-#pricing .ac-pricing-notes p{color:#c4d6f0!important}
-/* FAQ and changelog match the same visual language */
-.ac-faq .container,.ac-updates .container{color:#eff7ff}
-.ac-faq details,.ac-updates article,.ac-updates .ac-update-box{background:linear-gradient(145deg,#102b59,#0b2045)!important;border:1px solid #31598e!important;border-radius:14px!important;color:#edf6ff!important;padding:16px 20px!important;margin-bottom:9px!important}
-.ac-faq summary{color:#f4f8ff!important}
-.ac-faq details p{color:#c7d8f1!important}
-/* Policy pages: dark surroundings with high-contrast readable paper panels */
-.info-page main{background:transparent!important}
-.info-page .info-shell{color:#f4f8ff}
-.info-page .info-inner,.info-page .info-inner-refined,.info-page .info-links,.info-page .info-links-refined,.info-page .legal-card,.info-page .policy-card{background:linear-gradient(145deg,#102b59,#0c2148)!important;border:1px solid #365c91!important;border-radius:18px!important;color:#e7f2ff!important}
-.info-page .info-inner p,.info-page .info-inner li,.info-page .info-inner span,.info-page .info-links p,.info-page .info-inner-refined p{color:#d0def3!important}
-.info-page .info-inner a,.info-page .info-links a{color:#55e5ef}
-.info-page .info-inner h2,.info-page .info-inner h3,.info-page .info-inner h4,.info-page .info-links h2{color:#fff!important}
-.info-page .info-inner strong,.info-page .info-inner b{color:#fff}
-.info-page .info-inner hr{border-color:#395d90}
-/* Footer and privacy notice */
-.footer{background:#06172d!important;border-top:1px solid #29436a!important;color:#d9e9ff!important}
-.footer a{color:#b8cce9}.footer a:hover{color:#29e2ed}
-.footer p,.footer small{color:#b8cce9!important}
-.storage-notice,.cookie-notice,.cookie-banner{background:#0e2a56!important;color:#edf6ff!important;border:1px solid #4476ac!important;box-shadow:0 10px 28px #030d27aa!important}
-/* Mobile: maintain readable price choices and full-width card details */
+#pricing .ac-period-option-inner small{color:#c7d8f2!important}
+#pricing .ac-period-option input:checked+.ac-period-option-inner{background:#164a7a!important;border:2px solid #26dce8!important;padding:11.5px!important;box-shadow:0 0 0 2px #23dbe51b!important}
+#pricing .ac-period-option input:focus-visible+.ac-period-option-inner{outline:3px solid #8cf5f8;outline-offset:3px}
+#pricing .ac-card-benefits{display:flex;flex-direction:column;gap:10px;min-height:0;padding-top:15px!important;border-top:1px solid #3b5c8b!important}
+#pricing .ac-card-benefits .ac-benefits-heading{margin:0!important;color:#fff!important}
+#pricing .ac-card-benefits .ac-benefits{display:grid;grid-template-columns:1fr;gap:9px!important;margin:0!important}
+#pricing .ac-card-benefits .ac-benefits li{color:#d7e5f9!important;font-size:.9rem!important;line-height:1.5!important}
+#pricing .ac-benefits li::before{color:#37e4e7!important}
+#pricing .ac-custom-contact{grid-row:4;align-self:end!important;justify-self:stretch;display:flex;align-items:center;justify-content:center;min-height:44px!important;margin:0!important;background:#13c9d9!important;color:#062541!important;border-radius:11px!important;font-weight:800!important}
+#pricing .ac-pricing-notes,#pricing .ac-pricing-notes p{color:#c7d8ed!important}
+.ac-faq details{background:#112b56!important;border:1px solid #355c8e!important;border-radius:14px;padding:18px!important;margin-bottom:10px;color:#fff}
+.ac-faq summary{color:#fff}.ac-faq details p{color:#cbdcf1!important}
+.ac-coming{background:#263c82;color:#e8e7ff}
+/* Legal and policy pages: readable, unified panels. */
+.info-page .info-inner,.info-page .info-inner-refined,.info-page .policy-block{background:#112a53!important;border:1px solid #365b8c!important;border-radius:18px;color:#edf5ff!important}
+.info-page .info-inner h2,.info-page .info-inner h3,.info-page .info-inner h4,.info-links h2{color:#fff!important}
+.info-page .info-inner p,.info-page .info-inner li,.info-page .info-inner span{color:#d1def1!important}
+.info-page .info-inner a{color:#65e8ef!important;text-decoration:underline;text-underline-offset:3px}
+.info-page .info-inner strong{color:#fff}
+.footer{background:#06152d!important;border-top:1px solid #284773;color:#e5efff}
+.footer p,.footer small,.footer a:not(.brand){color:#c4d3e8!important}
+.footer a:hover{color:#42e8ed!important}
+.storage-notice{background:#112a54!important;color:#f0f7ff!important;border-color:#4971a3!important}
+.storage-notice p{color:#d5e2f5}.storage-actions a{color:#70ebf1}.storage-actions button{background:#1b8ca8;color:#fff}
 @media(max-width:760px){
- body{background-attachment:scroll}
- #pricing .ac-plan-grid{grid-template-columns:1fr!important;max-width:560px!important;gap:14px!important}
- #pricing .ac-plan-grid>.ac-plan{grid-template-rows:auto auto auto auto!important;min-height:0!important;padding:19px!important;gap:12px!important}
- #pricing .ac-plan-grid>.ac-plan.is-selected{padding:18px!important}
- #pricing .ac-card-head{min-height:58px;padding-left:62px;padding-top:2px}
- #pricing .ac-card-head .ac-recommend{top:-9px!important}
+ #pricing .ac-plan-grid{grid-template-columns:1fr!important;max-width:560px!important;gap:15px!important}
+ #pricing .ac-plan-grid>.ac-plan{grid-template-rows:auto auto auto auto!important;min-height:0!important;padding:20px!important;gap:13px!important}
+ #pricing .ac-plan-grid>.ac-plan.is-selected{padding:19.5px!important}
+ #pricing .ac-card-head{min-height:62px;padding-left:62px!important}
+ #pricing .ac-card-head .ac-recommend{top:-8px}
  #pricing .ac-card-pricing{min-height:0}
- #pricing .ac-period-option-inner{min-height:85px!important;padding:10px!important}
- #pricing .ac-period-option-inner b{font-size:1.04rem!important}
- #pricing .ac-card-benefits{padding-top:12px!important}
+ #pricing .ac-card-benefits{padding-top:13px!important}
 }
+@media(max-width:400px){#pricing .ac-period-option-inner{padding:9px!important}#pricing .ac-period-option-inner b{font-size:.94rem!important}}
 @media(prefers-reduced-motion:reduce){#pricing .ac-plan-grid>.ac-plan{transition:none!important}}
+
+
+/* v17 — consistent midnight theme across ALL pages and viewport sizes.
+   Consolidated overrides for old light-mode section and component rules. */
+:root{--ink:#f5f8ff;--muted:#c4d4ee;--line:#345a8c;--navy:#071832;--navy2:#102d5a;--teal:#20d9e5}
+html{background:#071832}
+body,body.autocheck-page,body.info-page{background:linear-gradient(145deg,#07162f 0%,#0b2250 47%,#081b3a 100%) fixed!important;color:#f1f7ff!important}
+main,body>main,.autocheck-page main,.info-page main{background:transparent!important;color:#f1f7ff!important}
+main>section,.section,.autocheck-page main>section,.info-page main>section,
+.ac-intro,.ac-features,.ac-screens,.ac-pricing,.ac-faq,.ac-updates,
+.apps-section,.why-section,.about-section,.contact-section{background:transparent!important;color:#f1f7ff!important}
+main h1,main h2,main h3,main h4,.section h2,.section h3,
+.ac-intro h2,.ac-features h2,.ac-screens h2,.ac-pricing h2,.ac-faq h2,.ac-updates h2,
+.why-panel h2,.why-panel h3,.contact-panel h2,.info-shell h1{color:#f6f9ff!important}
+main p,.section-intro,.why-item p,.ac-feature p,.ac-updates p,.ac-faq p,
+.info-shell>p,.info-page .info-shell>p:not(.section-kicker){color:#c9d9ef!important}
+.section-kicker,.eyebrow{color:#31e1ec!important}
+/* Home: avoid the pale box with invisible white headings. */
+.why-panel,.container.why-panel,.why-section .why-panel{
+ background:linear-gradient(135deg,#142f61 0%,#0c234b 100%)!important;
+ border:1px solid #38669d!important;box-shadow:0 16px 34px #020a1e55!important;color:#f4f8ff!important}
+.why-panel h2,.why-panel h3,.why-panel p,.why-item h3{color:#f4f8ff!important}
+.why-panel .why-item p{color:#cbdaf0!important}
+.why-icon{background:#214879!important;color:#46e8e9!important}
+/* Product and supporting cards. */
+.app-card,.home-card,.auto-card,.ac-feature,.contact-panel,.about-panel,.legal-doc-group,
+.info-link-grid a,.info-inner,.info-inner-refined,.policy-block{
+ background:linear-gradient(145deg,#153361,#0c234a)!important;
+ border-color:#376398!important;color:#f2f7ff!important}
+.app-card h3,.ac-feature h3,.contact-panel h2,.about-panel h2,.info-inner h2,
+.info-inner h3,.info-inner h4{color:#fff!important}
+.app-card p,.ac-feature p,.contact-panel p,.about-panel p,.info-inner p,.info-inner li{
+ color:#cbdcf2!important}
+.app-card .text-link,.info-inner a,.legal-doc-link{color:#53e4ef!important}
+.app-card .text-link.muted{color:#b7d7fa!important}
+/* App screenshots: ensure image and captions are visible on dark background. */
+.ac-screens,.ac-screens .container,.ac-shots{background:transparent!important}
+.ac-shot{color:#f4f8ff!important}
+.ac-shot strong{color:#eaf3ff!important}
+.ac-shot img{background:#101a37!important;border:1px solid #4c65a8!important;opacity:1!important;visibility:visible!important}
+/* Readable FAQ and update panels on every page. */
+.ac-info-panel,.ac-faq .ac-info-panel,.ac-updates .ac-info-panel{
+ background:linear-gradient(140deg,#142f5c,#0b2248)!important;
+ border:1px solid #345c91!important;border-radius:18px!important;color:#f2f8ff!important}
+.ac-faq details{background:#102750!important;border:1px solid #365d90!important}
+.ac-faq details summary,.ac-faq details p,.ac-updates .ac-info-panel p{color:#e6f0ff!important}
+/* All four subscription cards retain a common look; radio buttons remain selectable. */
+#pricing .ac-plan-grid>.ac-plan{background:linear-gradient(145deg,#143260,#0a2149)!important;color:#f5f9ff!important}
+#pricing .ac-card-pricing,#pricing .ac-card-benefits,#pricing .ac-benefits-heading,
+#pricing .ac-card-head h3,#pricing .ac-card-head .ac-vehicle-count,
+#pricing .ac-price-free,#pricing .ac-custom-price{color:#f3f9ff!important}
+#pricing .ac-plan-grid>.ac-plan .ac-benefits li{color:#dbe9fb!important}
+#pricing .ac-plan-grid>.ac-plan .ac-period-options legend{color:#eaf5ff!important}
+#pricing .ac-plan-grid>.ac-plan .ac-period-option-inner{
+ background:#102650!important;border-color:#5178b2!important;color:#fff!important}
+#pricing .ac-plan-grid>.ac-plan .ac-period-option-inner strong,
+#pricing .ac-plan-grid>.ac-plan .ac-period-option-inner b{color:#fff!important}
+#pricing .ac-plan-grid>.ac-plan .ac-period-option-inner small{color:#c8d9f1!important}
+#pricing .ac-plan-grid>.ac-plan .ac-period-option input:checked+.ac-period-option-inner{
+ background:#124b76!important;border-color:#21e4eb!important}
+#pricing .ac-plan-grid>.ac-plan .ac-custom-contact{background:#11d3df!important;color:#05263e!important}
+#pricing .ac-plan-grid>.ac-plan .ac-custom-contact:hover{background:#64f2f3!important}
+#pricing .ac-pricing-notes,#pricing .ac-pricing-notes p{color:#c8d9ef!important}
+/* Secondary pages and policies. */
+.info-page .info-shell,.info-page .info-shell-refined{background:transparent!important}
+.info-page .info-inner,.info-page .info-inner-refined,.info-page .policy-block{
+ background:#102b56!important;color:#f1f7ff!important;border-color:#3d6597!important}
+.info-page .info-inner p,.info-page .info-inner li,.info-page .info-inner span{color:#d4e2f5!important}
+.info-page .info-inner h2,.info-page .info-inner h3,.info-page .info-inner h4{color:#fff!important}
+.info-page .info-inner a{color:#6cf0f3!important}
+/* Preserve readability of native form inputs, menus and dialog surfaces. */
+.language-options,.apps-submenu,.nav-links.open{background:#0b2449!important;color:#f5f9ff!important;border-color:#3e6595!important}
+.language-options button,.apps-submenu a{color:#f1f7ff!important}
+.storage-notice{background:#102b53!important;color:#edf5ff!important}
+.footer{background:#06152d!important}
+@media(max-width:760px){
+ .section{padding-top:44px;padding-bottom:44px}
+ .why-panel{padding:26px 19px!important}
+ .why-panel .why-grid{gap:22px}
+ .ac-screens .ac-shot img{min-height:0}
+ #pricing .ac-plan-grid>.ac-plan{min-height:0!important}
+}
