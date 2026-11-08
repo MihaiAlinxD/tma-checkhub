@@ -29,6 +29,7 @@ const onScroll=()=>{header?.classList.toggle('compact',window.scrollY>60);backTo
 window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 backTop?.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'}));
 const motionOK=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(motionOK&&'IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('revealed');observer.unobserve(entry.target)}})},{threshold:.08});document.querySelectorAll('.section:not(.ac-faq):not(.ac-updates) .container, .app-card, .why-item').forEach(el=>{el.classList.add('reveal');observer.observe(el)})}
+// Content stays visible even when scrolling quickly, scripts fail, or screenshots capture a full page.
+document.querySelectorAll('.reveal').forEach(el=>{el.classList.remove('reveal');el.classList.add('revealed')});
 if(motionOK&&window.matchMedia('(hover:hover) and (pointer:fine)').matches){document.querySelectorAll('.auto-art,.house-art').forEach(el=>{const card=el.closest('.app-card');if(!card)return;card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(650px) rotateY(${x*9}deg) rotateX(${-y*9}deg) translateY(-3px)`});card.addEventListener('pointerleave',()=>el.style.transform='')})}
 document.querySelector('#year')?.replaceChildren(document.createTextNode(String(new Date().getFullYear())));

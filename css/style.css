@@ -163,3 +163,22 @@
 .legal-doc-link{display:flex;align-items:center;min-height:46px;padding:10px 0;color:#126078;font-size:14px;font-weight:650;line-height:1.45;border-top:1px solid #e3ebf0;overflow-wrap:anywhere}
 .legal-doc-link:hover,.legal-doc-link:focus-visible{color:#008f86;text-decoration:underline}
 @media(max-width:850px){.legal-doc-groups{grid-template-columns:1fr}.legal-doc-group{padding:18px}}
+
+/* November 2026: reliable visibility and a consistent compact footer */
+.reveal,.reveal.revealed{opacity:1!important;transform:none!important;visibility:visible!important}
+.footer{padding:36px 0 30px}
+.footer-grid-refined{grid-template-columns:minmax(190px,1.55fr) repeat(3,minmax(0,1fr));gap:clamp(18px,3vw,38px);align-items:start}
+.footer-grid-refined .brand{display:inline-flex;align-items:center;gap:9px;font-size:19px;line-height:1.25;color:#fff}
+.footer-grid-refined .footer-tagline{max-width:235px;margin:14px 0 5px;line-height:1.5}
+.footer-grid-refined .copyright{margin:5px 0 0}
+.footer-grid-refined h4{margin:5px 0 12px}
+.footer-grid-refined .footer-col a{margin:0 0 3px;line-height:1.65}
+.info-page main{min-height:0}
+.info-shell-refined{padding-top:clamp(8px,2vw,24px);padding-bottom:clamp(8px,2vw,24px)}
+.info-shell-refined>.section-kicker{margin-bottom:12px}
+.info-shell-refined>h1{margin:0 0 12px}
+.info-shell-refined>.info-inner-refined{border-color:#dce8ef;border-top:3px solid #13b9ad;box-shadow:0 12px 30px rgba(8,32,48,.035);margin:24px 0 28px;padding:clamp(22px,3.5vw,34px)}
+.info-shell-refined .info-links-refined{margin:22px 0 8px}
+.info-shell-refined .info-link-grid a{min-height:65px}
+@media(max-width:900px){.footer-grid-refined{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 30px}}
+@media(max-width:600px){.footer{padding:30px 0 26px}.footer-grid-refined{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 15px}.footer-grid-refined .footer-identity{grid-column:1/-1}.footer-grid-refined .footer-col:last-child{grid-column:1/-1}.footer-grid-refined .footer-col:last-child a{display:inline-block;margin-right:16px}.footer-grid-refined h4{margin-bottom:9px}.info-shell-refined>.info-inner-refined{margin:20px 0 24px;padding:22px}.info-shell-refined .info-links-refined{margin:22px 0 0}.info-shell-refined .info-link-grid a{min-height:58px}.autocheck-page .ac-intro,.autocheck-page .ac-features,.autocheck-page .ac-screens,.autocheck-page .ac-pricing,.autocheck-page .ac-faq,.autocheck-page .ac-updates{padding-top:44px;padding-bottom:44px}}
