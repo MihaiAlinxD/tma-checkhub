@@ -40,54 +40,25 @@ function showStorageNotice(){if(localStorage.getItem('tmacheckhub-storage-notice
 showStorageNotice();
 
 
-/* AutoCheck: plan comparison only; no purchase is initiated on this website. */
-document.addEventListener('DOMContentLoaded', () => {
-  const area = document.querySelector('#pricing');
-  if (!area) return;
-  let period = 'monthly';
-  let chosen = null;
-  const labels = {
-    ro: {monthly:'Lunar',annual:'Anual',select:'Selectează planul',selected:'Selectat',wait:'Achizițiile vor fi disponibile prin Google Play după lansare.',free:'Gratuit',per:'Perioada'},
-    en: {monthly:'Monthly',annual:'Yearly',select:'Select plan',selected:'Selected',wait:'Purchases will be available through Google Play after launch.',free:'Free',per:'Billing'},
-    es: {monthly:'Mensual',annual:'Anual',select:'Elegir plan',selected:'Seleccionado',wait:'Las compras estarán disponibles mediante Google Play después del lanzamiento.',free:'Gratis',per:'Período'}
-  };
-  const lang = () => labels[localStorage.getItem('tma_lang') || localStorage.getItem('tmaLanguage') || document.documentElement.lang] || labels.ro;
-  function render(){
-    const t=lang();
-    area.querySelectorAll('[data-billing]').forEach(b => {
-      const active=b.dataset.billing===period;
-      b.classList.toggle('is-active',active);
-      b.setAttribute('aria-pressed',String(active));
-      b.textContent=t[b.dataset.billing];
-    });
-    area.querySelectorAll('[data-plan]').forEach(card => {
-      const active=card.dataset.plan===chosen;
-      card.classList.toggle('is-selected',active);
-      card.setAttribute('aria-pressed',String(active));
-      const label=card.querySelector('.ac-plan-select-label');
-      if(label) label.textContent=active?t.selected:t.select;
-      const price=card.querySelector('[data-monthly-price]');
-      if(price){
-        const amount=price.dataset[period+'Price'];
-        const eur=price.dataset[period+'Eur'];
-        price.innerHTML='';
-        price.append(document.createTextNode(amount+' '));
-        const small=document.createElement('small');small.textContent='/ '+eur;price.append(small);
-      }
-    });
-    const status=area.querySelector('#ac-selection-status');
-    if(status){
-      const names={free:t.free,premium:'Premium',fleet:'Fleet'};
-      status.textContent=chosen ? `${names[chosen]} · ${chosen==='free' ? t.free : t[period]}. ${t.wait}` : t.wait;
-    }
-  }
-  area.querySelectorAll('[data-billing]').forEach(b=>b.addEventListener('click',()=>{period=b.dataset.billing;render();}));
-  area.querySelectorAll('[data-plan]').forEach(card=>{
-    const choose=()=>{chosen=card.dataset.plan;render();};
-    card.addEventListener('click',choose);
-    card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose();}});
-  });
-  const observer=new MutationObserver(()=>render());
-  observer.observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
-  render();
+/* AutoCheck informational pricing and plan selection; no website checkout. */
+document.addEventListener('DOMContentLoaded',()=>{
+ const area=document.querySelector('#pricing');if(!area)return;
+ const cards=[...area.querySelectorAll('.ac-plan[data-plan]')];let period='monthly',chosen='premium';
+ const translations={
+ ro:{monthly:'Lunar',annual:'Anual',month:'pe lună',year:'pe an',selected:'Selectat',choose:'Vezi beneficiile',free:'Gratuit permanent',notice:'Doar prezentare. Abonamentele se cumpără în aplicație prin Google Play după lansare.',benefits:['Toate funcțiile AutoCheck','Documente și alerte de expirare','Revizii, costuri și import OCR','Opțiuni de backup Google Drive','Cu reclame banner','Fără reclame banner'],vehicle:['1 autovehicul','Până la 5 autovehicule','Până la 10 autovehicule'],customTitle:'Custom · peste 10 autovehicule',customBody:'Pentru flote mai mari, discutăm direct numărul de vehicule și oferta potrivită.',customAction:'Cere ofertă prin e-mail'},
+ en:{monthly:'Monthly',annual:'Yearly',month:'per month',year:'per year',selected:'Selected',choose:'View benefits',free:'Always free',notice:'For information only. Subscriptions will be purchased in the app via Google Play after launch.',benefits:['All AutoCheck features','Documents and expiry alerts','Maintenance, costs and OCR import','Google Drive backup options','Banner ads included','No banner ads'],vehicle:['1 vehicle','Up to 5 vehicles','Up to 10 vehicles'],customTitle:'Custom · more than 10 vehicles',customBody:'For larger fleets, contact us to discuss vehicle limits and a tailored quote.',customAction:'Request a quote by email'},
+ es:{monthly:'Mensual',annual:'Anual',month:'al mes',year:'al año',selected:'Seleccionado',choose:'Ver ventajas',free:'Gratis siempre',notice:'Solo informativo. Las suscripciones se comprarán en la app mediante Google Play tras el lanzamiento.',benefits:['Todas las funciones de AutoCheck','Documentos y alertas de vencimiento','Mantenimiento, gastos e importación OCR','Opciones de copia en Google Drive','Incluye anuncios de banner','Sin anuncios de banner'],vehicle:['1 vehículo','Hasta 5 vehículos','Hasta 10 vehículos'],customTitle:'Custom · más de 10 vehículos',customBody:'Para flotas grandes, consúltanos el número de vehículos y un presupuesto personalizado.',customAction:'Solicitar presupuesto por correo'}
+ };
+ function render(){const t=translations[document.documentElement.lang]||translations.ro;
+ area.querySelectorAll('[data-billing]').forEach(b=>{const active=b.dataset.billing===period;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active));b.textContent=t[b.dataset.billing]});
+ cards.forEach(card=>{const plan=card.dataset.plan,active=plan===chosen;card.classList.toggle('is-selected',active);card.setAttribute('aria-pressed',String(active));card.querySelector('.ac-plan-select-label').textContent=active?t.selected:t.choose;
+ const benefits=card.querySelectorAll('.ac-benefits li');t.benefits.forEach((v,i)=>{if(i<4)benefits[i].textContent=v});benefits[4].textContent=t.benefits[plan==='free'?4:5];benefits[5].textContent=t.vehicle[{free:0,premium:1,fleet:2}[plan]];
+ const price=card.querySelector('.ac-price');if(price&&plan!=='free'){price.querySelector('.ac-price-main').textContent=price.dataset[period+'Price'];price.querySelector('.ac-price-eur').textContent='≈ '+price.dataset[period+'Eur'];price.querySelector('.ac-price-period').textContent=period==='monthly'?t.month:t.year}else if(price){price.querySelector('.ac-price-period').textContent=t.free}
+ });
+ const custom=area.querySelector('.ac-custom-plan');custom.querySelector('h3').textContent=t.customTitle;custom.querySelector('p').textContent=t.customBody;custom.querySelector('a').textContent=t.customAction;
+ area.querySelector('#ac-selection-status').textContent=t.notice;
+ }
+ area.querySelectorAll('[data-billing]').forEach(b=>b.addEventListener('click',()=>{period=b.dataset.billing;render()}));
+ cards.forEach(card=>{const choose=()=>{chosen=card.dataset.plan;render()};card.addEventListener('click',choose);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose()}})});
+ new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});render();
 });

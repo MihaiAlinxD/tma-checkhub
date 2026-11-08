@@ -202,3 +202,40 @@
 .ac-selection-status{text-align:center;margin:18px auto 0;max-width:650px;font-size:.94rem;color:#48627e}
 @media(max-width:600px){.ac-billing-btn{padding:9px 17px}.ac-plan[role="button"]:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){.ac-plan[role="button"]{transition:none}}
+
+/* AutoCheck pricing polish - overrides earlier card styles */
+#pricing .ac-billing-switch{display:grid;grid-template-columns:1fr 1fr;width:min(100%,310px);margin:24px auto 26px;padding:5px;border-radius:15px;background:#e4eaf7;border:1px solid #d5dff0;gap:4px}
+#pricing .ac-billing-btn{font:inherit;font-weight:750;font-size:14px;border-radius:11px;padding:12px 18px;min-height:44px;background:transparent;color:#334e77;border:0;box-shadow:none}
+#pricing .ac-billing-btn.is-active{background:#183d87;color:#fff;box-shadow:0 3px 10px #152f5b24}
+#pricing .ac-plan-grid{align-items:stretch;gap:16px}
+#pricing .ac-plan{position:relative;display:flex;flex-direction:column;gap:0;padding:23px 20px;border:1.5px solid #d9e3f5;border-radius:18px;background:#fff;box-shadow:0 4px 16px #152b5210;min-height:230px;overflow:visible}
+#pricing .ac-plan.ac-plan-featured{border-color:#b2b8ff}
+#pricing .ac-plan.is-selected{border:2px solid #5966ef!important;box-shadow:0 0 0 3px #5966ef17,0 10px 26px #243c751b}
+#pricing .ac-plan h3{margin:5px 0 14px}
+#pricing .ac-price{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:9px;row-gap:2px;margin:0 0 10px;line-height:1.25}
+#pricing .ac-price-main{font-size:clamp(24px,3vw,30px);font-weight:850;letter-spacing:-.7px;color:#132d68}
+#pricing .ac-price-eur{font-size:13px;color:#60718d;font-weight:550}
+#pricing .ac-price-period{display:block;flex-basis:100%;font-size:13px;font-weight:600;color:#64748b;margin-top:4px}
+#pricing .ac-plan>p{margin:4px 0 16px;color:#536581}
+#pricing .ac-plan-select-label{display:block;margin-top:auto;padding:12px 15px;border-radius:11px;background:#eef1ff;color:#243f9e;text-align:center;font-weight:750;font-size:14px}
+#pricing .ac-plan.is-selected .ac-plan-select-label{background:#374ed1;color:#fff}
+#pricing .ac-recommend{position:static;align-self:flex-start;margin:-4px 0 8px;padding:5px 10px;border-radius:999px;font-size:10px;letter-spacing:.05em}
+#pricing .ac-selection-status{max-width:740px;margin:22px auto 0;padding:13px 16px;border-radius:12px;background:#e9eff9;color:#38516e;font-size:13px;line-height:1.6}
+#pricing .ac-pricing-notes{margin-top:20px;line-height:1.65}
+#pricing .ac-pricing-notes p{margin:8px 0}
+@media(max-width:700px){#pricing .ac-plan-grid{gap:14px}#pricing .ac-plan{padding:20px 18px;min-height:205px}#pricing .ac-billing-switch{margin:20px auto 22px}}
+
+/* AutoCheck plan cards: clear mobile-friendly information comparison */
+#pricing .ac-plan-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:16px}
+#pricing .ac-plan{min-width:0;display:flex;flex-direction:column;padding:22px 20px;cursor:pointer}
+#pricing .ac-benefits{padding:0;margin:10px 0 18px;list-style:none;display:grid;gap:11px}
+#pricing .ac-benefits li{position:relative;padding-left:23px;font-size:13px;line-height:1.5;color:#43536d}
+#pricing .ac-benefits li::before{content:'✓';position:absolute;left:0;top:0;color:#0a9d9d;font-weight:800}
+#pricing .ac-plan-select-label{margin-top:auto;min-height:43px;display:flex;justify-content:center;align-items:center}
+#pricing .ac-custom-plan{margin:18px 0 0;padding:22px 25px;border-radius:18px;background:linear-gradient(115deg,#142f60,#1a477b);color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px}
+#pricing .ac-custom-plan h3{margin:0;font-size:20px;color:#fff;flex:1 1 240px}
+#pricing .ac-custom-plan p{margin:0;color:#e2edff;flex:2 1 300px;line-height:1.5;font-size:14px}
+#pricing .ac-custom-contact{display:inline-flex;justify-content:center;align-items:center;padding:12px 17px;border-radius:11px;background:#fff;color:#163b75;font-size:13px;font-weight:800;text-decoration:none;min-height:44px}
+#pricing .ac-custom-contact:focus-visible{outline:3px solid #5be2d5;outline-offset:3px}
+@media(max-width:920px){#pricing .ac-plan-grid{grid-template-columns:1fr;max-width:580px;margin:auto}#pricing .ac-plan{min-height:0}#pricing .ac-custom-plan{padding:21px}#pricing .ac-benefits{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){#pricing .ac-benefits{grid-template-columns:1fr}#pricing .ac-custom-plan{display:block}#pricing .ac-custom-plan p{margin:10px 0 15px}#pricing .ac-custom-contact{width:100%}}
