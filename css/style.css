@@ -141,3 +141,16 @@
 /* Prevent negative tracking from collapsing translated page headings on mobile. */
 .info-page .info-shell h1{letter-spacing:-.025em;line-height:1.15;overflow-wrap:normal;word-break:normal}
 @media(max-width:720px){.info-page .info-shell h1{font-size:clamp(29px,8vw,42px);letter-spacing:-.02em;line-height:1.2}.language-trigger{padding:7px 11px}}
+
+/* Information, contact and policy hub */
+.info-page .info-shell h1{overflow-wrap:break-word;letter-spacing:-.025em}
+.info-page .info-inner h2,.info-links h2{font-size:clamp(19px,2.2vw,25px);letter-spacing:-.02em;margin:0 0 12px;color:#10273c}
+.info-page .info-inner p{margin:0 0 12px;color:#52647d}
+.info-page .info-inner p:last-child{margin-bottom:0}
+.info-links{margin:30px 0 34px}
+.info-link-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+.info-link-grid a{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #dce8ef;border-radius:14px;padding:17px 20px;color:#12354a;font-weight:700;transition:border-color .2s,transform .2s}
+.info-link-grid a:hover{border-color:#18b8ad;transform:translateY(-2px)}
+.info-page .policy-block{margin:16px 0;padding:24px 28px}
+.policy-external a{color:#007e84;text-decoration:underline;text-underline-offset:3px;font-weight:700}
+@media(max-width:600px){.info-link-grid{grid-template-columns:1fr}.info-page .policy-block{padding:20px}}
