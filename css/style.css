@@ -91,3 +91,20 @@
   .autocheck-page .ac-shot { max-width: 150px; }
   .autocheck-page .ac-hero-grid { gap: 28px; }
 }
+
+/* AutoCheck desktop refinements; mobile remains unchanged. */
+@media (min-width: 901px) {
+ .autocheck-page .ac-hero-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(28px,4vw,64px);align-items:center}
+ .autocheck-page .ac-visual{min-height:500px}
+ .autocheck-page .ac-device{transform:rotate(5deg) scale(1.03)}
+ .autocheck-page .ac-shots{display:flex;justify-content:center;align-items:flex-start;gap:clamp(12px,1.5vw,22px);overflow:visible}
+ .autocheck-page .ac-shot{flex:0 1 178px;width:min(100%,178px);max-width:178px}
+ .autocheck-page .ac-plan-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch}
+ .autocheck-page .ac-plan{min-width:0}
+ .autocheck-page .ac-price{white-space:normal;overflow-wrap:anywhere}
+ .autocheck-page .ac-faq,.autocheck-page .ac-updates{min-height:0}
+ .autocheck-page .ac-faq .container,.autocheck-page .ac-updates .container{opacity:1!important;transform:none!important}
+}
+@media (min-width:901px) and (max-width:1080px){
+ .autocheck-page .ac-shot{flex-basis:150px;max-width:150px}
+}
