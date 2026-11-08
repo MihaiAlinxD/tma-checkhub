@@ -38,3 +38,56 @@ document.querySelector('#year')?.replaceChildren(document.createTextNode(String(
 const cookieTexts={ro:['Stocare locală','Folosim stocarea locală doar pentru a reține limba și această informare. Nu activăm cookie-uri proprii de publicitate sau analiză.','Am înțeles','Detalii'],en:['Local storage','We use local storage only to remember your language and this notice. We do not enable our own advertising or analytics cookies.','Got it','Details'],es:['Almacenamiento local','Usamos almacenamiento local solo para recordar el idioma y este aviso. No activamos cookies propias de publicidad ni de análisis.','Entendido','Detalles']};
 function showStorageNotice(){if(localStorage.getItem('tmacheckhub-storage-notice')==='1'||document.querySelector('.storage-notice'))return;const lang=document.documentElement.lang;const t=cookieTexts[lang]||cookieTexts.ro;const box=document.createElement('aside');box.className='storage-notice';box.setAttribute('aria-label',t[0]);const heading=document.createElement('strong');heading.textContent=t[0];const p=document.createElement('p');p.textContent=t[1];const actions=document.createElement('div');actions.className='storage-actions';const link=document.createElement('a');link.href='https://mihaialinxd.github.io/tma-checkhub/cookies/';link.textContent=t[3];const btn=document.createElement('button');btn.type='button';btn.textContent=t[2];btn.addEventListener('click',()=>{localStorage.setItem('tmacheckhub-storage-notice','1');box.remove()});actions.append(link,btn);box.append(heading,p,actions);document.body.append(box)}
 showStorageNotice();
+
+
+/* AutoCheck: plan comparison only; no purchase is initiated on this website. */
+document.addEventListener('DOMContentLoaded', () => {
+  const area = document.querySelector('#pricing');
+  if (!area) return;
+  let period = 'monthly';
+  let chosen = null;
+  const labels = {
+    ro: {monthly:'Lunar',annual:'Anual',select:'Selectează planul',selected:'Selectat',wait:'Achizițiile vor fi disponibile prin Google Play după lansare.',free:'Gratuit',per:'Perioada'},
+    en: {monthly:'Monthly',annual:'Yearly',select:'Select plan',selected:'Selected',wait:'Purchases will be available through Google Play after launch.',free:'Free',per:'Billing'},
+    es: {monthly:'Mensual',annual:'Anual',select:'Elegir plan',selected:'Seleccionado',wait:'Las compras estarán disponibles mediante Google Play después del lanzamiento.',free:'Gratis',per:'Período'}
+  };
+  const lang = () => labels[localStorage.getItem('tma_lang') || localStorage.getItem('tmaLanguage') || document.documentElement.lang] || labels.ro;
+  function render(){
+    const t=lang();
+    area.querySelectorAll('[data-billing]').forEach(b => {
+      const active=b.dataset.billing===period;
+      b.classList.toggle('is-active',active);
+      b.setAttribute('aria-pressed',String(active));
+      b.textContent=t[b.dataset.billing];
+    });
+    area.querySelectorAll('[data-plan]').forEach(card => {
+      const active=card.dataset.plan===chosen;
+      card.classList.toggle('is-selected',active);
+      card.setAttribute('aria-pressed',String(active));
+      const label=card.querySelector('.ac-plan-select-label');
+      if(label) label.textContent=active?t.selected:t.select;
+      const price=card.querySelector('[data-monthly-price]');
+      if(price){
+        const amount=price.dataset[period+'Price'];
+        const eur=price.dataset[period+'Eur'];
+        price.innerHTML='';
+        price.append(document.createTextNode(amount+' '));
+        const small=document.createElement('small');small.textContent='/ '+eur;price.append(small);
+      }
+    });
+    const status=area.querySelector('#ac-selection-status');
+    if(status){
+      const names={free:t.free,premium:'Premium',fleet:'Fleet'};
+      status.textContent=chosen ? `${names[chosen]} · ${chosen==='free' ? t.free : t[period]}. ${t.wait}` : t.wait;
+    }
+  }
+  area.querySelectorAll('[data-billing]').forEach(b=>b.addEventListener('click',()=>{period=b.dataset.billing;render();}));
+  area.querySelectorAll('[data-plan]').forEach(card=>{
+    const choose=()=>{chosen=card.dataset.plan;render();};
+    card.addEventListener('click',choose);
+    card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose();}});
+  });
+  const observer=new MutationObserver(()=>render());
+  observer.observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  render();
+});

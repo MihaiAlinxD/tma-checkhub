@@ -188,3 +188,17 @@
 .storage-notice strong{display:block;font-size:1rem;margin-bottom:5px}.storage-notice p{margin:0 0 12px;font-size:.88rem}.storage-actions{display:flex;align-items:center;justify-content:space-between;gap:12px}.storage-actions a{color:#126b86;text-decoration:underline;font-weight:600}.storage-actions button{border:0;border-radius:10px;background:#0d3658;color:white;padding:9px 16px;font:inherit;font-weight:700;cursor:pointer}.storage-actions button:focus-visible,.storage-actions a:focus-visible{outline:3px solid #18b5bf;outline-offset:3px}
 @media(max-width:600px){.storage-notice{left:12px;bottom:12px;width:calc(100vw - 24px);padding:14px 16px}.storage-notice p{font-size:.83rem}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Interactive subscription comparison */
+.ac-billing-switch{display:flex;gap:5px;justify-content:center;width:max-content;max-width:100%;margin:22px auto;padding:5px;border:1px solid rgba(80,112,160,.22);border-radius:999px;background:rgba(105,141,190,.09)}
+.ac-billing-btn{border:0;border-radius:999px;background:transparent;color:inherit;font:inherit;font-weight:700;padding:10px 22px;cursor:pointer}
+.ac-billing-btn.is-active{background:#164d92;color:#fff;box-shadow:0 3px 12px rgba(12,57,117,.18)}
+.ac-plan[role="button"]{cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.ac-plan[role="button"]:hover{transform:translateY(-3px)}
+.ac-plan[role="button"]:focus-visible{outline:3px solid #12a9b3;outline-offset:4px}
+.ac-plan.is-selected{border:2px solid #08a5b6!important;box-shadow:0 0 0 3px rgba(8,165,182,.13),0 12px 30px rgba(7,46,90,.1)}
+.ac-plan-select-label{display:block;margin-top:16px;padding:10px 14px;border-radius:12px;background:#e7f4f7;color:#12516a;text-align:center;font-weight:700}
+.ac-plan.is-selected .ac-plan-select-label{background:#087c92;color:white}
+.ac-selection-status{text-align:center;margin:18px auto 0;max-width:650px;font-size:.94rem;color:#48627e}
+@media(max-width:600px){.ac-billing-btn{padding:9px 17px}.ac-plan[role="button"]:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){.ac-plan[role="button"]{transition:none}}
