@@ -108,3 +108,24 @@
 @media (min-width:901px) and (max-width:1080px){
  .autocheck-page .ac-shot{flex-basis:150px;max-width:150px}
 }
+
+/* TMA CheckHub product refinements */
+.autocheck-page .ac-feature{border:1px solid #d9def5;box-shadow:0 12px 30px #303c8b0c;transition:transform .2s ease,box-shadow .2s ease}
+.autocheck-page .ac-feature:hover{transform:translateY(-4px);box-shadow:0 18px 35px #303c8b1a}
+.autocheck-page .ac-feature-icon{color:#7168df;background:linear-gradient(145deg,#edf0ff,#e8e6ff)}
+.autocheck-page .ac-feature-icon svg{width:27px;height:27px}
+.autocheck-page .ac-shots{align-items:start}
+.autocheck-page .ac-shot img{border:0;outline:2px solid #7570d14a;outline-offset:-2px;background:#111329;object-fit:contain;box-shadow:0 10px 26px #161d4540}
+.autocheck-page .ac-plan-featured{position:relative;border:2px solid #7564f4;box-shadow:0 22px 60px #6855e733;background:linear-gradient(180deg,#f5f3ff,#fff 40%)}
+.ac-recommend{align-self:flex-start;background:linear-gradient(110deg,#5c69ee,#a343df);color:#fff;padding:8px 14px;border-radius:30px;font-size:12px;font-weight:800;letter-spacing:.05em;margin:-11px 0 17px}
+.autocheck-page .ac-plan-annual{background:#f3f1ff;border-radius:10px;padding:14px 10px;margin:3px -8px 12px;border-top:0;color:#38337e}
+.autocheck-page .ac-plan-monthly{margin-top:auto}
+.autocheck-page .ac-info-panel{max-width:1020px;background:white;border:1px solid #e3e6f5;border-radius:22px;padding:clamp(24px,4vw,48px);box-shadow:0 12px 35px #141e480b}
+.autocheck-page .ac-faq,.autocheck-page .ac-updates{padding:55px 0}
+.autocheck-page .ac-updates{padding-top:0;background:#fff}
+.autocheck-page .ac-faq{background:#f5f7fe}
+.autocheck-page .ac-faq details{padding:20px 8px}
+.autocheck-page .ac-faq details:last-child{border-bottom:0}
+.info-page main{min-height:65vh;background:#f6f8fc}.info-shell{max-width:900px}.info-shell h1{font-size:clamp(32px,5vw,56px);color:#10273c}.info-shell>p:not(.section-kicker){font-size:19px;line-height:1.7;color:#52647d}.info-inner{padding:25px 30px;background:white;border:1px solid #dfe6f1;border-radius:18px;margin:30px 0;line-height:1.8}
+@media(min-width:901px){.autocheck-page .ac-plan-grid{grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:24px}.autocheck-page .ac-plan-featured{transform:translateY(-12px)}.autocheck-page .ac-shots{justify-content:center;gap:clamp(12px,1.5vw,22px)}.autocheck-page .ac-shot{max-width:178px;flex:0 1 178px}.autocheck-page .ac-faq,.autocheck-page .ac-updates{min-height:0}}
+@media(max-width:900px){.autocheck-page .ac-plan-featured{transform:none}.autocheck-page .ac-info-panel{border-radius:16px;padding:24px 18px}}
