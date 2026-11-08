@@ -52,7 +52,8 @@ document.addEventListener('DOMContentLoaded',()=>{
  };
  function select(card){cards.forEach(c=>{const selected=c===card;c.classList.toggle('is-selected',selected);c.setAttribute('aria-pressed',String(selected));});}
  cards.forEach(card=>{
-  card.addEventListener('click',e=>{if(e.target.closest('a'))return;select(card);});
+  const disclosure=card.querySelector('.ac-benefits-disclosure');if(disclosure)disclosure.addEventListener('toggle',()=>{const summary=disclosure.querySelector('summary');const language=document.documentElement.lang;summary.textContent=disclosure.open?({ro:'Ascunde beneficiile',en:'Hide benefits',es:'Ocultar ventajas'}[language]||'Ascunde beneficiile'):({ro:'Vezi toate beneficiile',en:'View all benefits',es:'Ver todas las ventajas'}[language]||'Vezi toate beneficiile');});
+  card.addEventListener('click',e=>{if(e.target.closest('a, summary'))return;select(card);});
   card.addEventListener('keydown',e=>{if(e.target!==card)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();select(card);}});
   card.querySelectorAll('input[type=radio]').forEach(input=>input.addEventListener('change',()=>select(card)));
  });
@@ -61,7 +62,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   cards.forEach((card,i)=>{
    const custom=card.dataset.plan==='custom';
    if(custom){
-    card.querySelector('h3').textContent=t.custom;
+    card.querySelector('h3').textContent=t.custom+' · '+({ro:'peste 10 autovehicule',en:'more than 10 vehicles',es:'más de 10 vehículos'}[document.documentElement.lang]||'peste 10 autovehicule');
     card.querySelector('p').textContent=t.customDesc;
     card.querySelector('a').textContent=t.contact;
    }else{
@@ -72,7 +73,7 @@ document.addEventListener('DOMContentLoaded',()=>{
    if(lis[0])lis[0].textContent=t.all;
    if(lis[1])lis[1].textContent=card.dataset.plan==='free'?t.ads:t.noads;
    if(custom&&lis[2])lis[2].textContent=t.vehicles[2]+'+';
-   const legend=card.querySelector('legend');if(legend)legend.textContent=t.period;
+   const summary=card.querySelector('.ac-benefits-summary');if(summary)summary.textContent=card.querySelector('details')?.open?({ro:'Ascunde beneficiile',en:'Hide benefits',es:'Ocultar ventajas'}[document.documentElement.lang]||'Ascunde beneficiile'):({ro:'Vezi toate beneficiile',en:'View all benefits',es:'Ver todas las ventajas'}[document.documentElement.lang]||'Vezi toate beneficiile');const legend=card.querySelector('legend');if(legend)legend.textContent=t.period;
    card.querySelectorAll('.ac-period-option strong').forEach((el,i)=>el.textContent=i===0?t.monthly:t.annual);
    const discount=card.querySelector('.ac-annual-tag');if(discount)discount.textContent=t.annualDiscount;
   });
