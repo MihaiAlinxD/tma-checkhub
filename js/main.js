@@ -41,44 +41,37 @@ showStorageNotice();
 
 
 
-/* AutoCheck informational subscription cards */
-document.addEventListener('DOMContentLoaded',()=>{
- const section=document.querySelector('#pricing');if(!section)return;
- const cards=[...section.querySelectorAll('.ac-plan-grid > .ac-plan')];
- const dict={
- ro:{benefits:'Beneficii incluse',all:'Toate funcțiile AutoCheck',ads:'Cu reclame banner',noads:'Fără reclame banner',custom:'Custom',customDesc:'Peste 10 autovehicule · toate funcțiile · fără reclame banner. Prețul se stabilește individual.',contact:'Solicită ofertă prin e-mail',period:'Alege perioada',monthly:'1 lună',annual:'1 an',annualDiscount:'−25% permanent · doar anual',vehicles:['1 autovehicul','Până la 5 autovehicule','Până la 10 autovehicule'],discount:'Reducerea permanentă de 25% se aplică exclusiv abonamentelor anuale Premium și Fleet, nu celor lunare.'},
- en:{benefits:'Included benefits',all:'All AutoCheck features',ads:'With banner ads',noads:'No banner ads',custom:'Custom',customDesc:'More than 10 vehicles · all features · no banner ads. Price agreed individually.',contact:'Request a quote by email',period:'Choose duration',monthly:'1 month',annual:'1 year',annualDiscount:'−25% permanently · annual only',vehicles:['1 vehicle','Up to 5 vehicles','Up to 10 vehicles'],discount:'The permanent 25% discount applies only to Premium and Fleet yearly subscriptions, not monthly subscriptions.'},
- es:{benefits:'Ventajas incluidas',all:'Todas las funciones de AutoCheck',ads:'Con anuncios de banner',noads:'Sin anuncios de banner',custom:'Custom',customDesc:'Más de 10 vehículos · todas las funciones · sin anuncios de banner. Precio acordado individualmente.',contact:'Solicitar presupuesto por correo',period:'Elige la duración',monthly:'1 mes',annual:'1 año',annualDiscount:'−25% permanente · solo anual',vehicles:['1 vehículo','Hasta 5 vehículos','Hasta 10 vehículos'],discount:'El descuento permanente del 25 % se aplica solo a las suscripciones anuales Premium y Fleet, no a las mensuales.'}
+
+/* AutoCheck pricing selection: independent card and period controls. No purchase on site. */
+document.addEventListener('DOMContentLoaded', () => {
+ const pricing=document.querySelector('#pricing'); if(!pricing)return;
+ const cards=[...pricing.querySelectorAll('.ac-plan-grid>.ac-plan')];
+ const translations={
+ ro:{vehicles:['1 autovehicul','Până la 5 autovehicule','Până la 10 autovehicule','Peste 10 autovehicule'],heading:'Ce include planul',benefits:['Toate funcțiile AutoCheck','Documente și alerte de expirare','Revizii, costuri și import OCR','Backup Google Drive (opțional)'],ads:'Cu reclame banner',noads:'Fără reclame banner',extra:'Număr de vehicule personalizat',period:'Alege perioada',monthly:'1 lună',annual:'1 an',customPrice:'Preț personalizat · prin e-mail',contact:'Solicită ofertă prin e-mail',free:'0 RON · Gratuit permanent'},
+ en:{vehicles:['1 vehicle','Up to 5 vehicles','Up to 10 vehicles','More than 10 vehicles'],heading:'Plan benefits',benefits:['All AutoCheck features','Documents and expiry reminders','Maintenance, costs and OCR import','Google Drive backup (optional)'],ads:'With banner ads',noads:'No banner ads',extra:'Custom vehicle limit',period:'Choose duration',monthly:'1 month',annual:'1 year',customPrice:'Custom pricing · by email',contact:'Request a quote by email',free:'0 RON · Free forever'},
+ es:{vehicles:['1 vehículo','Hasta 5 vehículos','Hasta 10 vehículos','Más de 10 vehículos'],heading:'Ventajas del plan',benefits:['Todas las funciones de AutoCheck','Documentos y alertas de vencimiento','Mantenimiento, gastos e importación OCR','Copia de seguridad en Google Drive (opcional)'],ads:'Con anuncios de banner',noads:'Sin anuncios de banner',extra:'Límite de vehículos personalizado',period:'Elige la duración',monthly:'1 mes',annual:'1 año',customPrice:'Precio personalizado · por correo',contact:'Solicitar presupuesto por correo',free:'0 RON · Gratis para siempre'}
  };
- function select(card){cards.forEach(c=>{const selected=c===card;c.classList.toggle('is-selected',selected);c.setAttribute('aria-pressed',String(selected));});}
+ function select(card){cards.forEach(c=>{const active=c===card;c.classList.toggle('is-selected',active);c.setAttribute('aria-pressed',String(active));});}
  cards.forEach(card=>{
-  const disclosure=card.querySelector('.ac-benefits-disclosure');if(disclosure)disclosure.addEventListener('toggle',()=>{const summary=disclosure.querySelector('summary');const language=document.documentElement.lang;summary.textContent=disclosure.open?({ro:'Ascunde beneficiile',en:'Hide benefits',es:'Ocultar ventajas'}[language]||'Ascunde beneficiile'):({ro:'Vezi toate beneficiile',en:'View all benefits',es:'Ver todas las ventajas'}[language]||'Vezi toate beneficiile');});
-  card.addEventListener('click',e=>{if(e.target.closest('a, summary'))return;select(card);});
+  card.addEventListener('click',e=>{if(e.target.closest('a'))return;select(card);});
   card.addEventListener('keydown',e=>{if(e.target!==card)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();select(card);}});
   card.querySelectorAll('input[type=radio]').forEach(input=>input.addEventListener('change',()=>select(card)));
  });
  function translate(){
-  const t=dict[document.documentElement.lang]||dict.ro;
+  const t=translations[document.documentElement.lang]||translations.ro;
   cards.forEach((card,i)=>{
-   const custom=card.dataset.plan==='custom';
-   if(custom){
-    card.querySelector('h3').textContent=t.custom+' · '+({ro:'peste 10 autovehicule',en:'more than 10 vehicles',es:'más de 10 vehículos'}[document.documentElement.lang]||'peste 10 autovehicule');
-    card.querySelector('p').textContent=t.customDesc;
-    card.querySelector('a').textContent=t.contact;
-   }else{
-    card.querySelector('.ac-vehicle-count').textContent=t.vehicles[i];
-    const title=card.querySelector('.ac-benefits-heading');if(title)title.textContent=t.benefits;
-   }
+   card.querySelector('.ac-vehicle-count').textContent=t.vehicles[i];
+   card.querySelector('.ac-benefits-heading').textContent=t.heading;
    const lis=card.querySelectorAll('.ac-benefits li');
-   if(lis[0])lis[0].textContent=t.all;
-   if(lis[1])lis[1].textContent=card.dataset.plan==='free'?t.ads:t.noads;
-   if(custom&&lis[2])lis[2].textContent=t.vehicles[2]+'+';
-   const summary=card.querySelector('.ac-benefits-summary');if(summary)summary.textContent=card.querySelector('details')?.open?({ro:'Ascunde beneficiile',en:'Hide benefits',es:'Ocultar ventajas'}[document.documentElement.lang]||'Ascunde beneficiile'):({ro:'Vezi toate beneficiile',en:'View all benefits',es:'Ver todas las ventajas'}[document.documentElement.lang]||'Vezi toate beneficiile');const legend=card.querySelector('legend');if(legend)legend.textContent=t.period;
-   card.querySelectorAll('.ac-period-option strong').forEach((el,i)=>el.textContent=i===0?t.monthly:t.annual);
-   const discount=card.querySelector('.ac-annual-tag');if(discount)discount.textContent=t.annualDiscount;
+   t.benefits.forEach((value,j)=>{lis[j].textContent=value;});
+   lis[4].textContent=i===0?t.ads:t.noads;
+   if(i===3)lis[5].textContent=t.extra;
+   const legend=card.querySelector('legend');if(legend)legend.textContent=t.period;
+   card.querySelectorAll('.ac-period-option strong').forEach((node,j)=>node.textContent=j===0?t.monthly:t.annual);
   });
-  const discount=section.querySelector('[data-i18n=discount]');if(discount)discount.textContent=t.discount;
+  cards[0].querySelector('.ac-price-free').textContent=t.free;
+  cards[3].querySelector('.ac-custom-price').textContent=t.customPrice;
+  cards[3].querySelector('.ac-custom-contact').textContent=t.contact;
  }
- new MutationObserver(translate).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
- translate();
+ new MutationObserver(translate).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});translate();
 });
