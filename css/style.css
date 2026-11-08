@@ -268,3 +268,34 @@
 #pricing .ac-custom-plan .ac-custom-contact{display:inline-block;margin-top:9px;padding:12px 17px;border-radius:10px;background:#087f93;color:#fff;text-decoration:none;font-weight:700}
 @media(max-width:400px){#pricing .ac-period-option-inner{padding:11px 7px}#pricing .ac-period-option-inner b{font-size:.95rem}}
 @media(prefers-reduced-motion:reduce){#pricing .ac-period-option-inner{transition:none}}
+
+/* AutoCheck pricing: four matching selectable cards, two columns on desktop */
+#pricing .ac-plan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch}
+#pricing .ac-plan-grid>.ac-plan{min-width:0;margin:0;display:flex;flex-direction:column;gap:10px;position:relative;border:1px solid #dbe4f4;border-radius:18px;padding:24px;background:#fff;box-shadow:0 5px 18px rgba(21,40,82,.045);cursor:pointer;transition:border-color .18s,box-shadow .18s}
+#pricing .ac-plan-grid>.ac-plan.ac-plan-featured{border-color:#ac9cfb}
+#pricing .ac-plan-grid>.ac-plan.is-selected{border:2px solid #079bab!important;box-shadow:0 0 0 3px rgba(7,155,171,.11),0 10px 26px rgba(18,55,104,.09)}
+#pricing .ac-plan-grid>.ac-plan:focus-visible{outline:3px solid #087f9e;outline-offset:3px}
+#pricing .ac-plan-grid>.ac-plan h3{margin:0;font-size:1.28rem}
+#pricing .ac-vehicle-count{font-size:.93rem;font-weight:700;color:#324c75}
+#pricing .ac-benefits-heading{margin:4px 0 0;font-size:.86rem;font-weight:800;color:#1a365c}
+#pricing .ac-details-always{display:block!important;opacity:1!important;visibility:visible!important;max-height:none!important;height:auto!important;overflow:visible!important}
+#pricing .ac-benefits{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+#pricing .ac-benefits li{position:relative;padding-left:22px;font-size:.91rem;line-height:1.4;color:#385171}
+#pricing .ac-benefits li:before{content:'✓';position:absolute;left:0;top:0;color:#0696a0;font-weight:800}
+#pricing .ac-period-options{border:0;margin:8px 0 0;padding:0;min-width:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#pricing .ac-period-options legend{font-weight:800;font-size:.88rem;margin-bottom:9px;padding:0}
+#pricing .ac-period-option{display:block;position:relative;min-width:0;cursor:pointer}
+#pricing .ac-period-option input{position:absolute;opacity:0;width:1px;height:1px}
+#pricing .ac-period-option-inner{display:flex;flex-direction:column;gap:5px;align-items:flex-start;min-height:98px;padding:12px;border:1px solid #cdd9ea;border-radius:12px;background:#f7f9fd;color:#183458;box-sizing:border-box}
+#pricing .ac-period-option input:checked+.ac-period-option-inner{border:2px solid #087f9e;background:#e9f7f9;box-shadow:0 0 0 2px rgba(8,127,158,.09);padding:11px}
+#pricing .ac-period-option input:focus-visible+.ac-period-option-inner{outline:3px solid #087f9e;outline-offset:2px}
+#pricing .ac-period-option-inner strong{font-size:.92rem}
+#pricing .ac-period-option-inner b{font-size:1.12rem;white-space:normal}
+#pricing .ac-period-option-inner small{font-size:.78rem}
+#pricing .ac-annual-tag{display:block;margin-top:2px;font-size:.71rem;font-weight:800;color:#087f9e;line-height:1.35}
+#pricing .ac-custom-plan{width:auto;max-width:none;justify-content:flex-start}
+#pricing .ac-custom-plan p{line-height:1.5}
+#pricing .ac-custom-contact{margin-top:auto;display:inline-flex;justify-content:center;text-align:center;padding:12px 14px;border-radius:12px;background:#0d7292;color:#fff;text-decoration:none;font-weight:750}
+#pricing .ac-pricing-notes{margin-top:18px}
+@media(max-width:700px){#pricing .ac-plan-grid{grid-template-columns:1fr;gap:13px}#pricing .ac-plan-grid>.ac-plan{padding:19px}}
+@media(prefers-reduced-motion:reduce){#pricing .ac-plan-grid>.ac-plan{transition:none}}
