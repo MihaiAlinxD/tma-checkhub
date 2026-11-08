@@ -64,3 +64,13 @@
 @media(max-width:900px){.ac-hero-grid{grid-template-columns:1fr;gap:15px;padding:65px 0}.ac-visual{min-height:400px}.ac-device{transform:rotate(4deg) scale(.82)}.ac-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ac-plan-grid{grid-template-columns:1fr}.ac-plan{min-height:0}}
 @media(max-width:560px){.ac-hero-grid{padding:55px 0 25px}.ac-hero h1{font-size:36px}.ac-lead{font-size:16px}.ac-visual{min-height:365px}.ac-feature-grid{grid-template-columns:1fr}.ac-shots{margin-right:-16px}.ac-footer{flex-direction:column;align-items:flex-start}.ac-price{font-size:24px}}
 @media(prefers-reduced-motion:reduce){.ac-device{transform:none}}
+
+/* Official AutoCheck brand and real screenshot gallery */
+.ac-official-logo{display:block;width:min(100%,360px);height:auto;object-fit:contain;margin:0 0 1rem}
+.ac-shots{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:.6rem .25rem 1.25rem;scrollbar-width:thin}
+.ac-shot{flex:0 0 clamp(170px,19vw,235px);scroll-snap-align:start;min-width:0}
+.ac-shot img{display:block;width:100%;height:auto;aspect-ratio:760/1536;object-fit:cover;border-radius:22px;border:2px solid rgba(134,116,241,.38);box-shadow:0 12px 30px rgba(12,12,38,.19);transition:transform .25s ease,box-shadow .25s ease}
+.ac-shot strong{display:block;margin-top:.8rem;text-align:center}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.ac-shot img:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(12,12,38,.27)}}
+@media(max-width:640px){.ac-shot{flex-basis:min(65vw,245px)}.ac-official-logo{width:min(100%,290px)}}
+@media(prefers-reduced-motion:reduce){.ac-shots{scroll-behavior:auto}.ac-shot img{transition:none}}
