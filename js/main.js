@@ -65,13 +65,15 @@ document.addEventListener('DOMContentLoaded', () => {
    const lis=card.querySelectorAll('.ac-benefits li');
    t.benefits.forEach((value,j)=>{lis[j].textContent=value;});
    lis[4].textContent=i===0?t.ads:t.noads;
-   if(i===3)lis[5].textContent=t.extra;
+   if(i===3 && lis[5])lis[5].textContent=t.extra;
    const legend=card.querySelector('legend');if(legend)legend.textContent=t.period;
    card.querySelectorAll('.ac-period-option strong').forEach((node,j)=>node.textContent=j===0?t.monthly:t.annual);
   });
   cards[0].querySelector('.ac-price-free').textContent=t.free;
-  cards[3].querySelector('.ac-custom-price').textContent=t.customPrice;
-  cards[3].querySelector('.ac-custom-contact').textContent=t.contact;
+  if(cards[3]){
+   const cp=cards[3].querySelector('.ac-custom-price');if(cp)cp.textContent=t.customPrice;
+   const cc=cards[3].querySelector('.ac-custom-contact');if(cc)cc.textContent=t.contact;
+  }
  }
  new MutationObserver(translate).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});translate();
 });
