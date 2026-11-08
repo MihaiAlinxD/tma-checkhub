@@ -40,25 +40,35 @@ function showStorageNotice(){if(localStorage.getItem('tmacheckhub-storage-notice
 showStorageNotice();
 
 
-/* AutoCheck informational pricing and plan selection; no website checkout. */
-document.addEventListener('DOMContentLoaded',()=>{
- const area=document.querySelector('#pricing');if(!area)return;
- const cards=[...area.querySelectorAll('.ac-plan[data-plan]')];let period='monthly',chosen='premium';
- const translations={
- ro:{monthly:'Lunar',annual:'Anual',month:'pe lună',year:'pe an',selected:'Selectat',choose:'Vezi beneficiile',free:'Gratuit permanent',notice:'Doar prezentare. Abonamentele se cumpără în aplicație prin Google Play după lansare.',benefits:['Toate funcțiile AutoCheck','Documente și alerte de expirare','Revizii, costuri și import OCR','Opțiuni de backup Google Drive','Cu reclame banner','Fără reclame banner'],vehicle:['1 autovehicul','Până la 5 autovehicule','Până la 10 autovehicule'],customTitle:'Custom · peste 10 autovehicule',customBody:'Pentru flote mai mari, discutăm direct numărul de vehicule și oferta potrivită.',customAction:'Cere ofertă prin e-mail'},
- en:{monthly:'Monthly',annual:'Yearly',month:'per month',year:'per year',selected:'Selected',choose:'View benefits',free:'Always free',notice:'For information only. Subscriptions will be purchased in the app via Google Play after launch.',benefits:['All AutoCheck features','Documents and expiry alerts','Maintenance, costs and OCR import','Google Drive backup options','Banner ads included','No banner ads'],vehicle:['1 vehicle','Up to 5 vehicles','Up to 10 vehicles'],customTitle:'Custom · more than 10 vehicles',customBody:'For larger fleets, contact us to discuss vehicle limits and a tailored quote.',customAction:'Request a quote by email'},
- es:{monthly:'Mensual',annual:'Anual',month:'al mes',year:'al año',selected:'Seleccionado',choose:'Ver ventajas',free:'Gratis siempre',notice:'Solo informativo. Las suscripciones se comprarán en la app mediante Google Play tras el lanzamiento.',benefits:['Todas las funciones de AutoCheck','Documentos y alertas de vencimiento','Mantenimiento, gastos e importación OCR','Opciones de copia en Google Drive','Incluye anuncios de banner','Sin anuncios de banner'],vehicle:['1 vehículo','Hasta 5 vehículos','Hasta 10 vehículos'],customTitle:'Custom · más de 10 vehículos',customBody:'Para flotas grandes, consúltanos el número de vehículos y un presupuesto personalizado.',customAction:'Solicitar presupuesto por correo'}
+/* AutoCheck pricing: independent monthly/yearly choices inside each card; informational only. */
+document.addEventListener('DOMContentLoaded', () => {
+ const area = document.querySelector('#pricing'); if (!area) return;
+ const translations = {
+  ro:{period:'Alege perioada',monthly:'Lunar',annual:'Anual',details:'Vezi toate beneficiile',hide:'Ascunde beneficiile',subtitle:'Selectează Lunar sau Anual pentru comparație',free:'Gratuit permanent · fără abonament',benefits:['Toate funcțiile AutoCheck','Documente și alerte pentru expirare','Revizii și întreținere','Costuri și cheltuieli','Import documente prin OCR','Backup și restaurare Google Drive','Cu reclame banner','Fără reclame banner'],vehicles:['1 autovehicul','Până la 5 autovehicule','Până la 10 autovehicule'],custom:'Custom · peste 10 autovehicule',customText:'Toate funcțiile AutoCheck, fără reclame banner. Numărul de vehicule și prețul se stabilesc prin ofertă personalizată.',contact:'Cere ofertă prin e-mail'},
+  en:{period:'Choose billing period',monthly:'Monthly',annual:'Yearly',details:'View all benefits',hide:'Hide benefits',subtitle:'Choose monthly or yearly to compare',free:'Always free · no subscription',benefits:['All AutoCheck features','Documents and expiry alerts','Maintenance and servicing','Costs and expenses','OCR document import','Google Drive backup and restore','With banner ads','No banner ads'],vehicles:['1 vehicle','Up to 5 vehicles','Up to 10 vehicles'],custom:'Custom · more than 10 vehicles',customText:'All AutoCheck features, no banner ads. Vehicle limit and price are agreed in a custom quote.',contact:'Request a quote by email'},
+  es:{period:'Elige el período',monthly:'Mensual',annual:'Anual',details:'Ver todas las ventajas',hide:'Ocultar ventajas',subtitle:'Elige mensual o anual para comparar',free:'Gratis siempre · sin suscripción',benefits:['Todas las funciones de AutoCheck','Documentos y alertas de vencimiento','Mantenimiento y revisiones','Costes y gastos','Importación de documentos OCR','Copia y restauración en Google Drive','Con anuncios de banner','Sin anuncios de banner'],vehicles:['1 vehículo','Hasta 5 vehículos','Hasta 10 vehículos'],custom:'Custom · más de 10 vehículos',customText:'Todas las funciones de AutoCheck, sin anuncios de banner. El número de vehículos y el precio se acuerdan mediante presupuesto.',contact:'Solicitar presupuesto por correo'}
  };
- function render(){const t=translations[document.documentElement.lang]||translations.ro;
- area.querySelectorAll('[data-billing]').forEach(b=>{const active=b.dataset.billing===period;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active));b.textContent=t[b.dataset.billing]});
- cards.forEach(card=>{const plan=card.dataset.plan,active=plan===chosen;card.classList.toggle('is-selected',active);card.setAttribute('aria-pressed',String(active));card.querySelector('.ac-plan-select-label').textContent=active?t.selected:t.choose;
- const benefits=card.querySelectorAll('.ac-benefits li');t.benefits.forEach((v,i)=>{if(i<4)benefits[i].textContent=v});benefits[4].textContent=t.benefits[plan==='free'?4:5];benefits[5].textContent=t.vehicle[{free:0,premium:1,fleet:2}[plan]];
- const price=card.querySelector('.ac-price');if(price&&plan!=='free'){price.querySelector('.ac-price-main').textContent=price.dataset[period+'Price'];price.querySelector('.ac-price-eur').textContent='≈ '+price.dataset[period+'Eur'];price.querySelector('.ac-price-period').textContent=period==='monthly'?t.month:t.year}else if(price){price.querySelector('.ac-price-period').textContent=t.free}
+ const cards=[...area.querySelectorAll('.ac-plan[data-plan]')];
+ const render=()=>{
+  const t=translations[document.documentElement.lang]||translations.ro;
+  cards.forEach((card,i)=>{
+   const plan=card.dataset.plan, open=!card.querySelector('.ac-details').hidden;
+   card.querySelector('.ac-vehicle-count').textContent=t.vehicles[i];
+   card.querySelector('.ac-plan-subtitle').textContent=plan==='free'?t.free:t.subtitle;
+   const btn=card.querySelector('.ac-details-toggle');btn.textContent=open?t.hide:t.details;
+   const li=card.querySelectorAll('.ac-benefits li');
+   for(let j=0;j<6;j++)li[j].textContent=t.benefits[j];
+   li[6].textContent=t.benefits[plan==='free'?6:7];li[7].textContent=t.vehicles[i];
+   const legend=card.querySelector('legend');if(legend)legend.textContent=t.period;
+   card.querySelectorAll('.ac-period-option').forEach((label,j)=>label.querySelector('strong').textContent=j===0?t.monthly:t.annual);
+  });
+  const custom=area.querySelector('.ac-custom-plan');custom.querySelector('h3').textContent=t.custom;custom.querySelector('p').textContent=t.customText;custom.querySelector('a').textContent=t.contact;
+ };
+ cards.forEach(card=>{
+  const btn=card.querySelector('.ac-details-toggle');const details=card.querySelector('.ac-details');
+  btn.addEventListener('click',()=>{details.hidden=!details.hidden;btn.setAttribute('aria-expanded',String(!details.hidden));render();});
+  card.querySelectorAll('.ac-period-option input').forEach(input=>input.addEventListener('change',()=>{card.classList.add('is-selected');card.querySelectorAll('.ac-period-option').forEach(label=>label.classList.toggle('is-active',label.querySelector('input').checked));}));
+  card.querySelectorAll('.ac-period-option').forEach(label=>label.classList.toggle('is-active',label.querySelector('input').checked));
  });
- const custom=area.querySelector('.ac-custom-plan');custom.querySelector('h3').textContent=t.customTitle;custom.querySelector('p').textContent=t.customBody;custom.querySelector('a').textContent=t.customAction;
- area.querySelector('#ac-selection-status').textContent=t.notice;
- }
- area.querySelectorAll('[data-billing]').forEach(b=>b.addEventListener('click',()=>{period=b.dataset.billing;render()}));
- cards.forEach(card=>{const choose=()=>{chosen=card.dataset.plan;render()};card.addEventListener('click',choose);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose()}})});
  new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});render();
 });
