@@ -595,3 +595,12 @@ main p,.section-intro,.ac-updates p,.why-item p,.ac-feature p{color:var(--tma-su
  #pricing .ac-card-pricing{min-height:0!important}
  #pricing .ac-card-benefits .ac-benefits li{font-size:.94rem!important}
 }
+
+/* v23: fix legacy light-theme specificity for plan headings */
+#pricing .ac-plan-grid > .ac-plan .ac-card-head h3,
+#pricing .ac-plan-grid > .ac-plan .ac-card-pricing > .ac-price-free,
+#pricing .ac-plan-grid > .ac-plan .ac-card-benefits > .ac-benefits-heading {color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important}
+#pricing .ac-plan-grid > .ac-plan .ac-card-head .ac-vehicle-count {color:#d9e9ff!important;-webkit-text-fill-color:#d9e9ff!important;opacity:1!important}
+#pricing .ac-plan-grid > .ac-plan .ac-card-benefits > .ac-benefits-heading {font-size:1rem!important;margin:0 0 10px!important}
+#pricing .ac-plan-grid > .ac-plan .ac-card-pricing > .ac-price-free {font-size:1.2rem!important}
+#pricing .ac-plan-grid > .ac-plan .ac-card-benefits .ac-benefits li {color:#f7fbff!important;-webkit-text-fill-color:#f7fbff!important}
