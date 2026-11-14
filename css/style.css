@@ -721,3 +721,9 @@ main p,.section-intro,.ac-updates p,.why-item p,.ac-feature p{color:var(--tma-su
 .autocheck-page .ac-phone-arrow{font-size:22px;color:#b9caff;line-height:1}
 .autocheck-page .ac-phone-bottom{margin-top:auto;display:flex;justify-content:space-around;align-items:center;border-top:1px solid #ffffff20;padding-top:11px;color:#9db9f0;font-size:17px}
 @media(max-width:560px){.autocheck-page .ac-actions .btn{flex:1 1 100%;min-height:50px}.autocheck-page .ac-actions .ac-third-action{flex:1 1 100%}}
+
+/* AutoCheck hero: three equal, aligned actions */
+.autocheck-page .ac-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:690px}
+.autocheck-page .ac-actions .btn{width:100%;min-width:0;min-height:56px;padding:12px 14px;white-space:normal}
+.status.available{background:#d6fff1;color:#075e48}
+@media(max-width:760px){.autocheck-page .ac-actions{grid-template-columns:1fr;max-width:440px}}
