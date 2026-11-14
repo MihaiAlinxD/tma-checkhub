@@ -727,3 +727,5 @@ main p,.section-intro,.ac-updates p,.why-item p,.ac-feature p{color:var(--tma-su
 .autocheck-page .ac-actions .btn{width:100%;min-width:0;min-height:56px;padding:12px 14px;white-space:normal}
 .status.available{background:#d6fff1;color:#075e48}
 @media(max-width:760px){.autocheck-page .ac-actions{grid-template-columns:1fr;max-width:440px}}
+
+[data-legal-original][hidden], [data-legal-translation][hidden] {display:none!important;}
