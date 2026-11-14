@@ -672,3 +672,8 @@ main p,.section-intro,.ac-updates p,.why-item p,.ac-feature p{color:var(--tma-su
 .brand .brand-logo{display:block;width:220px;height:auto;max-width:100%;object-fit:contain;flex-shrink:0}
 .footer .brand .brand-logo{width:205px}
 @media(max-width:600px){.brand .brand-logo{width:174px}.footer .brand .brand-logo{width:185px}}
+
+/* Identitate TMA CheckHub in ilustratia telefonului */
+.phone-logo,.glow-check{background:linear-gradient(145deg,#08263f,#12375a);overflow:hidden}
+.phone-logo img,.glow-check img{display:block;width:88%;height:88%;object-fit:contain}
+.glow-check{box-shadow:0 0 30px #00e6dc70}
