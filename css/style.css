@@ -700,3 +700,24 @@ main p,.section-intro,.ac-updates p,.why-item p,.ac-feature p{color:var(--tma-su
   50%{transform:translateY(-9px) rotate(2deg)}
 }
 @media (prefers-reduced-motion:reduce){.hero-art .glow-check{animation:none;will-change:auto}}
+
+/* AutoCheck public launch — hero CTA and polished, symmetric device preview */
+.autocheck-page .ac-actions{display:flex;align-items:stretch;gap:12px;flex-wrap:wrap}
+.autocheck-page .ac-actions .btn{display:inline-flex;align-items:center;justify-content:center;text-align:center;min-height:54px;padding:13px 20px;line-height:1.2}
+.autocheck-page .ac-actions .ac-third-action{border-color:#7b91d8}
+.autocheck-page .ac-device{display:flex;flex-direction:column;gap:10px;padding:42px 16px 18px;overflow:hidden}
+.autocheck-page .ac-phone-header{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+.autocheck-page .ac-phone-appicon{width:42px;height:42px;object-fit:contain;border-radius:11px}
+.autocheck-page .ac-phone-brand{font-size:19px;font-weight:800;line-height:1.15}
+.autocheck-page .ac-phone-brand small{display:block;color:#aabde9;font-size:9px;font-weight:600;margin-top:4px}
+.autocheck-page .ac-phone-caption{font-size:10px;font-weight:800;letter-spacing:1.5px;color:#9cb9ed;margin:0 0 3px}
+.autocheck-page .ac-phone-item{display:flex;align-items:center;gap:10px;min-height:67px;border:1px solid #ffffff12;border-radius:14px;padding:10px;background:#1c2b51;color:#f7f9ff}
+.autocheck-page .ac-phone-item-featured{background:linear-gradient(115deg,#334aa2,#27376f);border-color:#7186e955}
+.autocheck-page .ac-phone-item-icon{display:grid;place-items:center;flex:0 0 34px;height:34px;color:#92d4ff;background:#101f44;border:1px solid #5e78c555;border-radius:10px}
+.autocheck-page .ac-phone-item-icon svg{width:21px;height:21px}
+.autocheck-page .ac-phone-item-copy{flex:1;min-width:0}
+.autocheck-page .ac-phone-item-copy strong{display:block;font-size:12px;line-height:1.2}
+.autocheck-page .ac-phone-item-copy small{display:block;font-size:9px;line-height:1.4;margin-top:4px;color:#c1d0ee}
+.autocheck-page .ac-phone-arrow{font-size:22px;color:#b9caff;line-height:1}
+.autocheck-page .ac-phone-bottom{margin-top:auto;display:flex;justify-content:space-around;align-items:center;border-top:1px solid #ffffff20;padding-top:11px;color:#9db9f0;font-size:17px}
+@media(max-width:560px){.autocheck-page .ac-actions .btn{flex:1 1 100%;min-height:50px}.autocheck-page .ac-actions .ac-third-action{flex:1 1 100%}}
