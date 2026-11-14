@@ -683,3 +683,20 @@ main p,.section-intro,.ac-updates p,.why-item p,.ac-feature p{color:var(--tma-su
 .hero-art .phone-logo img{display:block;width:100%;height:auto;max-height:65px;object-fit:contain}
 .hero-art .glow-check{background:transparent;border-radius:0;box-shadow:none;overflow:visible}
 .hero-art .glow-check img{display:block;width:100%;height:100%;object-fit:contain}
+
+/* TMA CheckHub: simbolul din dreapta telefonului - plutire subtila, fara fundal */
+.hero-art .glow-check{
+  background:transparent;box-shadow:none;overflow:visible;
+  width:84px;height:84px;
+  animation:tmaSymbolFloat 5.2s ease-in-out infinite;
+  will-change:transform;
+}
+.hero-art .glow-check img{
+  display:block;width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 6px 10px rgba(0,15,55,.35)) drop-shadow(0 0 8px rgba(0,200,255,.22));
+}
+@keyframes tmaSymbolFloat{
+  0%,100%{transform:translateY(0) rotate(-2deg)}
+  50%{transform:translateY(-9px) rotate(2deg)}
+}
+@media (prefers-reduced-motion:reduce){.hero-art .glow-check{animation:none;will-change:auto}}
