@@ -729,3 +729,10 @@ main p,.section-intro,.ac-updates p,.why-item p,.ac-feature p{color:var(--tma-su
 @media(max-width:760px){.autocheck-page .ac-actions{grid-template-columns:1fr;max-width:440px}}
 
 [data-legal-original][hidden], [data-legal-translation][hidden] {display:none!important;}
+
+/* AutoCheck updates: official-style Google Play badge */
+.autocheck-page .ac-updates .ac-google-play-badge{display:inline-flex;align-items:center;justify-content:center;width:min(240px,100%);margin-top:12px;border-radius:8px;transition:transform .18s ease,filter .18s ease}
+.autocheck-page .ac-updates .ac-google-play-badge:hover{transform:translateY(-2px);filter:brightness(1.12)}
+.autocheck-page .ac-updates .ac-google-play-badge:focus-visible{outline:3px solid #8fd7ff;outline-offset:5px}
+.autocheck-page .ac-updates .ac-google-play-badge img{display:block;width:100%;height:auto;object-fit:contain}
+@media(prefers-reduced-motion:reduce){.autocheck-page .ac-updates .ac-google-play-badge{transition:none}}
