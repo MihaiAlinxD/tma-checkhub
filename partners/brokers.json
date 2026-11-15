@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "brokers": [
+    {
+      "id": "gcc-asigurari",
+      "name": "GCC Asigurari",
+      "whatsapp": "40722553241",
+      "city": "Pitești",
+      "country": "RO",
+      "coverage": "national",
+      "services": [
+        "RCA",
+        "CASCO",
+        "Locuință",
+        "Sănătate",
+        "Călătorie"
+      ],
+      "photo": "https://mihaialinxd.github.io/tma-checkhub/partners/images/gcc-asigurari.webp",
+      "active": true,
+      "promoted": false
+    }
+  ]
+}
