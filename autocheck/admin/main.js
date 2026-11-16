@@ -16,7 +16,7 @@ function render(){
  const actions=el('div','actions');
  for(const [label,decision] of [['Aprobă','approved'],['Respinge','rejected']]){
    const b=el('button','',label);
-   const allowed=r.status==='pending' && (window.AutoCheckAdmin.role==='super_admin' || (window.AutoCheckAdmin.role==='broker_moderator' && r.broker==='gcc-asigurari' && decision==='approved'));
+   const allowed=r.status==='pending' && (window.AutoCheckAdmin.role==='super_admin' || (window.AutoCheckAdmin.role==='broker_moderator' && decision==='approved'));
    b.disabled=!allowed;
    b.title=allowed?'Confirmă decizia de moderare':'Acțiune indisponibilă pentru rolul sau statusul curent';
    b.addEventListener('click',async()=>{b.disabled=true;try{await window.AutoCheckAdmin.moderate(r,decision);}catch(e){alert('Moderarea a eșuat: '+(e.code||e.message||'eroare'));render();}});

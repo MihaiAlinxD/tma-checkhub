@@ -25,12 +25,11 @@ const demoPanel = document.getElementById('admin-demo');
 const brokerSelect = document.getElementById('broker');
 const brokerOptions = [...brokerSelect.options];
 function applyRoleScope(role) {
-  const isModerator = role === 'broker_moderator';
-  for (const option of brokerOptions) option.hidden = isModerator && option.value !== 'gcc-asigurari';
-  brokerSelect.value = isModerator ? 'gcc-asigurari' : 'all';
-  brokerSelect.disabled = isModerator;
+  for (const option of brokerOptions) option.hidden = false;
+  brokerSelect.value = 'all';
+  brokerSelect.disabled = false;
   document.getElementById('scope-description').textContent = isModerator
-    ? 'Recenzii GCC Asigurări aprobate și în așteptare. Recenziile publicate ale tuturor brokerilor rămân vizibile public în aplicație.'
+    ? 'Moderator GCC: poate vedea și aproba recenziile în așteptare ale tuturor brokerilor; nu poate respinge sau șterge.'
     : 'Recenzii aprobate și în așteptare pentru toți brokerii. Recenziile publicate sunt vizibile public în aplicație.';
   brokerSelect.dispatchEvent(new Event('change'));
 }
@@ -40,7 +39,7 @@ let authRevision = 0;
 let currentRole = null;
 const knownBrokers = ['gcc-asigurari','broker-demo-promoted','broker-demo-standard'];
 async function loadAdminReviews(isModerator, revision) {
-  const ids = isModerator ? ['gcc-asigurari'] : knownBrokers;
+  const ids = knownBrokers;
   const statuses = ['approved', 'pending'];
   const results = await Promise.all(ids.flatMap(broker => statuses.map(async reviewStatus => {
     // Each query is constrained by status so Firestore can prove its access rule.
@@ -54,7 +53,7 @@ async function loadAdminReviews(isModerator, revision) {
   })));
   if (revision !== authRevision) return;
   window.AutoCheckAdmin.setReviews(results.flat());
-  status.textContent = 'Rol verificat. Recenziile aprobate și în așteptare sunt citite din Firestore (maximum 50 per categorie și broker). Acțiunile sunt dezactivate.';
+  status.textContent = 'Rol verificat. Recenzii citite din Firestore (maximum 50 per status și broker). Aprobarea este activă pentru Super Admin și GCC; respingerea numai pentru Super Admin.';
 }
 
 function lockPanel(message) {
@@ -105,7 +104,7 @@ onAuthStateChanged(auth, async user => {
     roleLabel.hidden = false;
     demoPanel.hidden = false;
     status.textContent = 'Rol verificat. Se încarcă recenziile aprobate și în așteptare din Firestore...';
-    // Restricție vizuală suplimentară: moderatorul GCC nu vede exemplele altor brokeri.
+    // Moderatorul GCC poate aproba recenziile tuturor brokerilor, dar nu le poate respinge.
     applyRoleScope(isModerator ? 'broker_moderator' : 'super_admin');
     try { await loadAdminReviews(isModerator,revision); }
     catch (readError) {
@@ -141,7 +140,7 @@ logout.addEventListener('click', async () => {
 window.AutoCheckAdmin.moderate = async (review, decision) => {
   if (!auth.currentUser || !currentRole || review.status !== 'pending') throw new Error('Acțiune nepermisă.');
   if (!['approved','rejected'].includes(decision)) throw new Error('Status invalid.');
-  if (currentRole === 'broker_moderator' && (review.broker !== 'gcc-asigurari' || decision !== 'approved')) throw new Error('Moderatorul GCC poate doar aproba recenzii GCC.');
+  if (currentRole === 'broker_moderator' && decision !== 'approved') throw new Error('Moderatorul GCC poate doar aproba recenzii.');
   if (!window.confirm(decision === 'approved' ? 'Aprobi această recenzie? Va deveni publică.' : 'Respingi această recenzie? Folosește această opțiune numai pentru încălcări reale ale regulilor.')) return false;
   await updateDoc(doc(db,'brokers',review.broker,'reviews',review.id), {status:decision,updatedAt:serverTimestamp()});
   await loadAdminReviews(currentRole === 'broker_moderator',authRevision);
