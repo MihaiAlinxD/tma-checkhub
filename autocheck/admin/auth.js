@@ -1,7 +1,7 @@
 // AutoCheck Admin Web — Etapa 2. Numai autentificare; NU acordă roluri sau acces la Firestore.
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
-import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+import { getFirestore, doc, getDoc, collection, query, where, limit, getDocs } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBFSarhddXeLgB_G5NGw0waz1goFa99N0Q',
@@ -37,6 +37,24 @@ function applyRoleScope(role) {
 
 const roleLabel = document.getElementById('admin-role');
 let authRevision = 0;
+const knownBrokers = ['gcc-asigurari','broker-demo-promoted','broker-demo-standard'];
+async function loadApprovedReviews(isModerator, revision) {
+  // Regulile existente permit numai listarea recenziilor cu status approved.
+  // Nu se solicită recenzii pending/reported și nu se modifică documente.
+  const ids = isModerator ? ['gcc-asigurari'] : knownBrokers;
+  const results = await Promise.all(ids.map(async broker => {
+    const q = query(collection(db,'brokers',broker,'reviews'),where('status','==','approved'),limit(50));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(d => {
+      const r=d.data();
+      return {broker,author:'Utilizator Google',stars:Number.isInteger(r.stars)?Math.max(1,Math.min(5,r.stars)):0,status:'approved',comment:typeof r.comment==='string'?r.comment:''};
+    }).filter(r=>r.stars>=1);
+  }));
+  if (revision !== authRevision) return;
+  window.AutoCheckAdmin.setReviews(results.flat());
+  status.textContent = 'Rol verificat. Se afișează recenziile aprobate disponibile în Firestore (maximum 50 per broker). Moderarea este dezactivată.';
+}
+
 function lockPanel(message) {
   demoPanel.hidden = true;
   roleLabel.hidden = true;
@@ -55,6 +73,7 @@ onAuthStateChanged(auth, async user => {
   userBox.hidden = !user;
   lockPanel(user ? 'Se verifică rolul administrativ...' : 'Conectează-te cu un cont Google autorizat pentru a accesa panoul.');
   applyRoleScope(null);
+  window.AutoCheckAdmin.clear();
   if (!user) {
     name.textContent = ''; email.textContent = '';
     photo.hidden = true; photo.removeAttribute('src');
@@ -79,9 +98,15 @@ onAuthStateChanged(auth, async user => {
     roleLabel.textContent = isAdmin ? 'Super Admin – Acces autorizat' : 'Moderator GCC Asigurări – Acces autorizat';
     roleLabel.hidden = false;
     demoPanel.hidden = false;
-    status.textContent = 'Rol verificat în Firestore. Interfața de mai jos conține numai date demonstrative; acțiunile administrative sunt dezactivate.';
+    status.textContent = 'Rol verificat. Se încarcă recenziile aprobate din Firestore...';
     // Restricție vizuală suplimentară: moderatorul GCC nu vede exemplele altor brokeri.
     applyRoleScope(isModerator ? 'broker_moderator' : 'super_admin');
+    try { await loadApprovedReviews(isModerator,revision); }
+    catch (readError) {
+      if (revision !== authRevision) return;
+      window.AutoCheckAdmin.setError('Citirea recenziilor a eșuat ('+(readError.code||'eroare')+'). Verifică regulile Firestore și conexiunea.');
+      status.textContent='Rol autorizat, dar recenziile nu au putut fi citite.';
+    }
   } catch (error) {
     if (revision !== authRevision) return;
     lockPanel('Nu s-a putut verifica rolul în Firestore (' + (error.code || 'eroare') + '). Acces blocat.');
