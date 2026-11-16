@@ -25,6 +25,7 @@ const demoPanel = document.getElementById('admin-demo');
 const brokerSelect = document.getElementById('broker');
 const brokerOptions = [...brokerSelect.options];
 function applyRoleScope(role) {
+  const isModerator = role === 'broker_moderator';
   for (const option of brokerOptions) option.hidden = false;
   brokerSelect.value = 'all';
   brokerSelect.disabled = false;
