@@ -7,11 +7,11 @@ function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className
 function render(){
  const broker=document.getElementById('broker').value,status=document.getElementById('status').value;
  root.replaceChildren();const scoped=reviews.filter(r=>broker==='all'||r.broker===broker);
- for(const key of ['pending','approved','reported'])document.getElementById(key).textContent=key==='approved'?scoped.length:'—';
+ for(const key of ['pending','approved','reported'])document.getElementById(key).textContent=key==='reported'?'—':scoped.filter(r=>r.status===key).length;
  const data=scoped.filter(r=>status==='all'||r.status===status);
- if(!data.length){root.append(el('p','empty',status==='pending'||status==='reported'?'Recenziile nepublicate nu sunt încă accesibile în această etapă.':'Nu există recenzii aprobate în Firestore pentru filtrul selectat.'));return;}
+ if(!data.length){root.append(el('p','empty',status==='reported'?'Recenziile raportate nu sunt încă disponibile.':'Nu există recenzii în Firestore pentru filtrul selectat.'));return;}
  for(const r of data){const card=el('article','review'),top=el('div','review-top'),info=el('div');
- info.append(el('h3','',r.author),el('div','broker',brokerNames[r.broker]||r.broker));top.append(info,el('span','tag approved','Aprobată'));
+ info.append(el('h3','',r.author),el('div','broker',brokerNames[r.broker]||r.broker));top.append(info,el('span',r.status==='pending'?'tag pending':'tag approved',r.status==='pending'?'În așteptare':'Aprobată'));
  card.append(top,el('div','stars','★'.repeat(r.stars)+'☆'.repeat(5-r.stars)),el('p','',r.comment));
  const actions=el('div','actions');for(const label of ['Aprobă','Respinge','Răspunde']){const b=el('button','',label);b.disabled=true;b.title='Acțiunile de moderare nu sunt încă implementate';actions.append(b);}card.append(actions);root.append(card);
  }
