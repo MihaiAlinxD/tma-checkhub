@@ -7,3 +7,6 @@
 [hidden]{display:none!important}
 .role-badge{display:inline-block!important;padding:6px 12px;border-radius:20px;border:1px solid #3fd6c8;background:#0f4b49;color:#d5fff8;font-weight:700;font-size:13px;margin:10px 0!important}
 .role-badge[hidden]{display:none!important}
+
+/* Recalculare rating - numai Super Admin */
+.rating-admin .muted{color:var(--muted);margin:10px 0 16px}.rating-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.rating-controls label{font-size:13px;color:var(--muted)}.rating-controls .auth-btn{min-width:190px}.rating-admin #rating-result{color:var(--teal);font-size:14px;margin:12px 0 0;overflow-wrap:anywhere}@media(max-width:700px){.rating-controls{align-items:stretch;flex-direction:column}.rating-controls .auth-btn{width:100%}}

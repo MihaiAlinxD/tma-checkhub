@@ -1,6 +1,7 @@
 // AutoCheck Admin Web — Etapa 2. Numai autentificare; NU acordă roluri sau acces la Firestore.
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
+import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js';
 import { getFirestore, doc, getDoc, collection, query, where, limit, getDocs, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 
 const firebaseConfig = {
@@ -21,6 +22,12 @@ const email = document.getElementById('auth-email');
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const functions = getFunctions(app, 'europe-west1');
+const recalculateRating = httpsCallable(functions, 'recalculateBrokerRating');
+const ratingPanel = document.getElementById('rating-admin-panel');
+const ratingButton = document.getElementById('rating-recalculate');
+const ratingBroker = document.getElementById('rating-broker');
+const ratingStatus = document.getElementById('rating-result');
 const demoPanel = document.getElementById('admin-demo');
 const brokerSelect = document.getElementById('broker');
 const brokerOptions = [...brokerSelect.options];
@@ -59,6 +66,7 @@ async function loadAdminReviews(isModerator, revision) {
 
 function lockPanel(message) {
   demoPanel.hidden = true;
+  ratingPanel.hidden = true;
   roleLabel.hidden = true;
   roleLabel.textContent = '';
   status.textContent = message;
@@ -76,6 +84,8 @@ onAuthStateChanged(auth, async user => {
   lockPanel(user ? 'Se verifică rolul administrativ...' : 'Conectează-te cu un cont Google autorizat pentru a accesa panoul.');
   applyRoleScope(null);
   currentRole = null;
+  ratingPanel.hidden = true;
+  ratingStatus.textContent = '';
   window.AutoCheckAdmin.setRole(null);
   window.AutoCheckAdmin.clear();
   if (!user) {
@@ -100,6 +110,7 @@ onAuthStateChanged(auth, async user => {
       return;
     }
     currentRole = isAdmin ? 'super_admin' : 'broker_moderator';
+    ratingPanel.hidden = !isAdmin;
     window.AutoCheckAdmin.setRole(currentRole);
     roleLabel.textContent = isAdmin ? 'Super Admin – Acces autorizat' : 'Moderator GCC Asigurări – Acces autorizat';
     roleLabel.hidden = false;
@@ -147,3 +158,24 @@ window.AutoCheckAdmin.moderate = async (review, decision) => {
   await loadAdminReviews(currentRole === 'broker_moderator',authRevision);
   return true;
 };
+
+// Recalculare manuală numai pentru Super Admin. Autorizarea reală este verificată și în Cloud Function.
+ratingButton.addEventListener('click', async () => {
+  if (!auth.currentUser || currentRole !== 'super_admin') return;
+  const brokerId = ratingBroker.value;
+  if (!brokerId || !window.confirm('Recalculezi ratingul pentru ' + ratingBroker.options[ratingBroker.selectedIndex].text + '?')) return;
+  const userUid = auth.currentUser.uid;
+  ratingButton.disabled = true;
+  ratingStatus.textContent = 'Se recalculează ratingul...';
+  try {
+    const response = await recalculateRating({brokerId});
+    if (auth.currentUser?.uid !== userUid || currentRole !== 'super_admin') return;
+    const result = response.data;
+    ratingStatus.textContent = 'Rating actualizat: ' + Number(result.ratingAverage).toLocaleString('ro-RO', {maximumFractionDigits:2}) + ' / 5 (' + result.ratingCount + ' recenzii aprobate).';
+  } catch (error) {
+    if (auth.currentUser?.uid !== userUid || currentRole !== 'super_admin') return;
+    ratingStatus.textContent = 'Recalcularea a eșuat (' + (error.code || 'eroare') + '). Verifică autentificarea și jurnalul Cloud Functions.';
+  } finally {
+    ratingButton.disabled = false;
+  }
+});
