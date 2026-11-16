@@ -30,8 +30,8 @@ function applyRoleScope(role) {
   brokerSelect.value = isModerator ? 'gcc-asigurari' : 'all';
   brokerSelect.disabled = isModerator;
   document.getElementById('scope-description').textContent = isModerator
-    ? 'Exemple administrative GCC Asigurări. Recenziile publicate ale tuturor brokerilor rămân vizibile public în aplicație.'
-    : 'Exemple administrative pentru toți brokerii. Recenziile publicate sunt vizibile public în aplicație.';
+    ? 'Recenzii aprobate GCC Asigurări. Recenziile publicate ale tuturor brokerilor rămân vizibile public în aplicație.'
+    : 'Recenzii aprobate pentru toți brokerii. Recenziile publicate sunt vizibile public în aplicație.';
   brokerSelect.dispatchEvent(new Event('change'));
 }
 

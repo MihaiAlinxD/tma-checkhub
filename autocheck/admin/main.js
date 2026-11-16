@@ -1,7 +1,6 @@
 'use strict';
 // Etapa 8: numai recenzii aprobate, citite din Firestore; fără operații de scriere.
 let reviews=[];
-const labels={pending:'În așteptare',approved:'Aprobată',reported:'Raportată'};
 const root=document.getElementById('reviews');
 const brokerNames={'gcc-asigurari':'GCC Asigurări','broker-demo-promoted':'Broker DEMO Promovat','broker-demo-standard':'Broker DEMO Standard'};
 function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
@@ -10,7 +9,7 @@ function render(){
  root.replaceChildren();const scoped=reviews.filter(r=>broker==='all'||r.broker===broker);
  for(const key of ['pending','approved','reported'])document.getElementById(key).textContent=key==='approved'?scoped.length:'—';
  const data=scoped.filter(r=>status==='all'||r.status===status);
- if(!data.length){root.append(el('p','empty',status==='pending'||status==='reported'?'Recenziile nepublicate nu sunt încă accesibile în această etapă.':'Nu există recenzii aprobate pentru filtrul selectat.'));return;}
+ if(!data.length){root.append(el('p','empty',status==='pending'||status==='reported'?'Recenziile nepublicate nu sunt încă accesibile în această etapă.':'Nu există recenzii aprobate în Firestore pentru filtrul selectat.'));return;}
  for(const r of data){const card=el('article','review'),top=el('div','review-top'),info=el('div');
  info.append(el('h3','',r.author),el('div','broker',brokerNames[r.broker]||r.broker));top.append(info,el('span','tag approved','Aprobată'));
  card.append(top,el('div','stars','★'.repeat(r.stars)+'☆'.repeat(5-r.stars)),el('p','',r.comment));
