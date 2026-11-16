@@ -1,7 +1,7 @@
 // AutoCheck Admin Web — Etapa 2. Numai autentificare; NU acordă roluri sau acces la Firestore.
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
-import { getFirestore, doc, getDoc, collection, query, where, limit, getDocs } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+import { getFirestore, doc, getDoc, collection, query, where, limit, getDocs, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBFSarhddXeLgB_G5NGw0waz1goFa99N0Q',
@@ -37,6 +37,7 @@ function applyRoleScope(role) {
 
 const roleLabel = document.getElementById('admin-role');
 let authRevision = 0;
+let currentRole = null;
 const knownBrokers = ['gcc-asigurari','broker-demo-promoted','broker-demo-standard'];
 async function loadAdminReviews(isModerator, revision) {
   const ids = isModerator ? ['gcc-asigurari'] : knownBrokers;
@@ -47,7 +48,7 @@ async function loadAdminReviews(isModerator, revision) {
     const snapshot = await getDocs(q);
     return snapshot.docs.map(d => {
       const r = d.data();
-      return {broker, author: 'Utilizator Google', stars: Number.isInteger(r.stars) ? Math.max(1, Math.min(5, r.stars)) : 0,
+      return {id:d.id, broker, author: 'Utilizator Google', stars: Number.isInteger(r.stars) ? Math.max(1, Math.min(5, r.stars)) : 0,
         status: reviewStatus, comment: typeof r.comment === 'string' ? r.comment : ''};
     }).filter(r => r.stars >= 1);
   })));
@@ -74,6 +75,8 @@ onAuthStateChanged(auth, async user => {
   userBox.hidden = !user;
   lockPanel(user ? 'Se verifică rolul administrativ...' : 'Conectează-te cu un cont Google autorizat pentru a accesa panoul.');
   applyRoleScope(null);
+  currentRole = null;
+  window.AutoCheckAdmin.setRole(null);
   window.AutoCheckAdmin.clear();
   if (!user) {
     name.textContent = ''; email.textContent = '';
@@ -96,6 +99,8 @@ onAuthStateChanged(auth, async user => {
       lockPanel('Contul Google este conectat, dar nu are un rol administrativ activ. Acces refuzat.');
       return;
     }
+    currentRole = isAdmin ? 'super_admin' : 'broker_moderator';
+    window.AutoCheckAdmin.setRole(currentRole);
     roleLabel.textContent = isAdmin ? 'Super Admin – Acces autorizat' : 'Moderator GCC Asigurări – Acces autorizat';
     roleLabel.hidden = false;
     demoPanel.hidden = false;
@@ -131,3 +136,14 @@ logout.addEventListener('click', async () => {
   try { await signOut(auth); }
   catch(error) { status.textContent = 'Deconectarea a eșuat: ' + (error.code || 'eroare necunoscută'); logout.disabled = false; }
 });
+
+// Client actions are gated by Firestore security rules; UI checks are supplementary.
+window.AutoCheckAdmin.moderate = async (review, decision) => {
+  if (!auth.currentUser || !currentRole || review.status !== 'pending') throw new Error('Acțiune nepermisă.');
+  if (!['approved','rejected'].includes(decision)) throw new Error('Status invalid.');
+  if (currentRole === 'broker_moderator' && (review.broker !== 'gcc-asigurari' || decision !== 'approved')) throw new Error('Moderatorul GCC poate doar aproba recenzii GCC.');
+  if (!window.confirm(decision === 'approved' ? 'Aprobi această recenzie? Va deveni publică.' : 'Respingi această recenzie? Folosește această opțiune numai pentru încălcări reale ale regulilor.')) return false;
+  await updateDoc(doc(db,'brokers',review.broker,'reviews',review.id), {status:decision,updatedAt:serverTimestamp()});
+  await loadAdminReviews(currentRole === 'broker_moderator',authRevision);
+  return true;
+};
