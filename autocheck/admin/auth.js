@@ -22,6 +22,19 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const demoPanel = document.getElementById('admin-demo');
+const brokerSelect = document.getElementById('broker');
+const brokerOptions = [...brokerSelect.options];
+function applyRoleScope(role) {
+  const isModerator = role === 'broker_moderator';
+  for (const option of brokerOptions) option.hidden = isModerator && option.value !== 'gcc-asigurari';
+  brokerSelect.value = isModerator ? 'gcc-asigurari' : 'all';
+  brokerSelect.disabled = isModerator;
+  document.getElementById('scope-description').textContent = isModerator
+    ? 'Exemple administrative GCC Asigurări. Recenziile publicate ale tuturor brokerilor rămân vizibile public în aplicație.'
+    : 'Exemple administrative pentru toți brokerii. Recenziile publicate sunt vizibile public în aplicație.';
+  brokerSelect.dispatchEvent(new Event('change'));
+}
+
 const roleLabel = document.getElementById('admin-role');
 let authRevision = 0;
 function lockPanel(message) {
@@ -41,6 +54,7 @@ onAuthStateChanged(auth, async user => {
   logout.disabled = false;
   userBox.hidden = !user;
   lockPanel(user ? 'Se verifică rolul administrativ...' : 'Conectează-te cu un cont Google autorizat pentru a accesa panoul.');
+  applyRoleScope(null);
   if (!user) {
     name.textContent = ''; email.textContent = '';
     photo.hidden = true; photo.removeAttribute('src');
@@ -67,10 +81,7 @@ onAuthStateChanged(auth, async user => {
     demoPanel.hidden = false;
     status.textContent = 'Rol verificat în Firestore. Interfața de mai jos conține numai date demonstrative; acțiunile administrative sunt dezactivate.';
     // Restricție vizuală suplimentară: moderatorul GCC nu vede exemplele altor brokeri.
-    const brokerSelect = document.getElementById('broker');
-    brokerSelect.value = isModerator ? 'gcc-asigurari' : 'all';
-    brokerSelect.disabled = isModerator;
-    brokerSelect.dispatchEvent(new Event('change'));
+    applyRoleScope(isModerator ? 'broker_moderator' : 'super_admin');
   } catch (error) {
     if (revision !== authRevision) return;
     lockPanel('Nu s-a putut verifica rolul în Firestore (' + (error.code || 'eroare') + '). Acces blocat.');
