@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "brokers": [
+    {
+      "id": "gcc-asigurari",
+      "name": "GCC Asigurari",
+      "whatsapp": "40722553241",
+      "city": "Pitești",
+      "country": "RO",
+      "coverage": "national",
+      "services": [
+        "RCA",
+        "CASCO",
+        "Locuință",
+        "Sănătate",
+        "Călătorie",
+        "Asistenta Rutiera"
+      ],
+      "photo": "https://mihaialinxd.github.io/tma-checkhub/partners/images/gcc-asigurari.webp",
+      "active": true,
+      "promoted": false,
+      "tier": "exclusive"
+    },
+    {
+      "id": "broker-demo-promoted",
+      "name": "Broker DEMO Promovat",
+      "whatsapp": "40723665429",
+      "city": "Demo",
+      "country": "RO",
+      "coverage": "national",
+      "services": [
+        "RCA",
+        "CASCO",
+        "Locuință",
+        "Călătorie"
+      ],
+      "photo": "https://mihaialinxd.github.io/tma-checkhub/partners/images/broker-demo-promoted.webp",
+      "active": true,
+      "promoted": true,
+      "tier": "promoted"
+    },
+    {
+      "id": "broker-demo-standard",
+      "name": "Broker DEMO Standard",
+      "whatsapp": "40723665429",
+      "city": "Demo",
+      "country": "RO",
+      "coverage": "national",
+      "services": [
+        "RCA",
+        "CASCO",
+        "Sănătate",
+        "Asistenta Rutiera"
+      ],
+      "photo": "https://mihaialinxd.github.io/tma-checkhub/partners/images/broker-demo-standard.webp",
+      "active": true,
+      "promoted": false,
+      "tier": "standard"
+    }
+  ]
+}
