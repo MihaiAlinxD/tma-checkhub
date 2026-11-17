@@ -10,3 +10,6 @@
 
 /* Recalculare rating - numai Super Admin */
 .rating-admin .muted{color:var(--muted);margin:10px 0 16px}.rating-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.rating-controls label{font-size:13px;color:var(--muted)}.rating-controls .auth-btn{min-width:190px}.rating-admin #rating-result{color:var(--teal);font-size:14px;margin:12px 0 0;overflow-wrap:anywhere}@media(max-width:700px){.rating-controls{align-items:stretch;flex-direction:column}.rating-controls .auth-btn{width:100%}}
+
+/* Butoane de moderare active */
+.actions .action-btn:not(:disabled){cursor:pointer;opacity:1;color:#fff;background:#117f76;border-color:#3fd6c8}
