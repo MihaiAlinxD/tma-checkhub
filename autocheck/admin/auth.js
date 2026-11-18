@@ -76,14 +76,17 @@ async function loadAdminReviews(isModerator, revision) {
   const reports = await getDocs(query(collection(db,'brokerReports'),limit(50)));
   for (const d of reports.docs) {
     const r=d.data();
+    // The admin queue contains pending reports only; resolved and dismissed
+    // documents remain in Firestore as evidence.
+    if (r.status !== 'pending') continue;
     // Do not display orphan reports for reviews/replies already deleted.
     if (!r.brokerId || !r.reviewId) continue;
     const review = await getDoc(doc(db,'brokers',r.brokerId,'reviews',r.reviewId));
-    if (!review.exists()) continue;
+    if (!review.exists() || review.get('status') !== 'approved') continue;
     if (r.contentType === 'reply') {
       if (!r.replyId) continue;
       const reply = await getDoc(doc(db,'brokers',r.brokerId,'reviews',r.reviewId,'replies',r.replyId));
-      if (!reply.exists()) continue;
+      if (!reply.exists() || reply.get('status') !== 'approved') continue;
     }
     items.push({kind:'report',id:d.id,broker:r.brokerId,reviewId:r.reviewId,replyId:r.replyId || null,author:'Raportare',status:r.status,comment:[r.reason,r.details].filter(Boolean).join(' — ')});
   }
@@ -179,7 +182,12 @@ logout.addEventListener('click', async () => {
 window.AutoCheckAdmin.moderate = async (item, decision) => {
   if (!auth.currentUser || !currentRole || item.status !== 'pending') throw new Error('Acțiune nepermisă.');
   const uid=auth.currentUser.uid;
-  if (!window.confirm('Confirmi acțiunea de moderare: '+decision+'?')) return false;
+  const message = item.kind === 'report'
+    ? (decision === 'remove_content'
+      ? 'Aprobi raportarea? Conținutul va fi ascuns din aplicație, iar raportările vor rămâne în Firestore ca dovezi.'
+      : 'Respingi raportarea? Conținutul va rămâne public, iar raportarea va fi păstrată în Firestore ca dovadă.')
+    : 'Confirmi acțiunea de moderare: '+decision+'?';
+  if (!window.confirm(message)) return false;
   if (item.kind === 'review' || item.kind === 'revision') {
     await moderateReview({brokerId:item.broker,reviewId:item.reviewId,target:item.kind === 'revision' ? 'revision' : 'review',action:decision});
   } else if (item.kind === 'reply') {
