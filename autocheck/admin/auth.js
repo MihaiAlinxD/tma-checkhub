@@ -76,6 +76,15 @@ async function loadAdminReviews(isModerator, revision) {
   const reports = await getDocs(query(collection(db,'brokerReports'),limit(50)));
   for (const d of reports.docs) {
     const r=d.data();
+    // Do not display orphan reports for reviews/replies already deleted.
+    if (!r.brokerId || !r.reviewId) continue;
+    const review = await getDoc(doc(db,'brokers',r.brokerId,'reviews',r.reviewId));
+    if (!review.exists()) continue;
+    if (r.contentType === 'reply') {
+      if (!r.replyId) continue;
+      const reply = await getDoc(doc(db,'brokers',r.brokerId,'reviews',r.reviewId,'replies',r.replyId));
+      if (!reply.exists()) continue;
+    }
     items.push({kind:'report',id:d.id,broker:r.brokerId,reviewId:r.reviewId,replyId:r.replyId || null,author:'Raportare',status:r.status,comment:[r.reason,r.details].filter(Boolean).join(' — ')});
   }
   if (revision !== authRevision) return;
