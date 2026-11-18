@@ -9,7 +9,7 @@ Deschide `index.html` în browser sau pornește `python -m http.server 8000` în
 1. Creează un repository public, de exemplu `tma-checkhub`.
 2. Încarcă **conținutul** acestui folder în rădăcina repository-ului (nu folderul părinte).
 3. În GitHub: Settings → Pages → Build and deployment → Deploy from a branch → `main` / `(root)` → Save.
-4. URL-ul va fi de forma `https://UTILIZATOR.github.io/tma-checkhub/`.
+4. URL-ul va fi de forma `https://tmacheckhub.com/`.
 5. După cumpărarea domeniului `.com`, configurăm Custom domain și DNS.
 
 ## De completat înainte de lansarea publică
