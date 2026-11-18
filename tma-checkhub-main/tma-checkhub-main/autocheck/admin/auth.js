@@ -2,7 +2,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-functions.js';
-import { getFirestore, doc, getDoc, collection, query, where, limit, getDocs, startAfter } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+import { getFirestore, doc, getDoc, collection, query, where, limit, getDocs } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBFSarhddXeLgB_G5NGw0waz1goFa99N0Q',
@@ -34,19 +34,14 @@ const ratingStatus = document.getElementById('rating-result');
 const demoPanel = document.getElementById('admin-demo');
 const brokerSelect = document.getElementById('broker');
 const brokerOptions = [...brokerSelect.options];
-let authorizedBrokerId = null;
-function applyRoleScope(role, brokerId = null) {
+function applyRoleScope(role) {
   const isModerator = role === 'broker_moderator';
-  authorizedBrokerId = isModerator ? brokerId : null;
-  for (const option of brokerOptions) {
-    option.hidden = isModerator && option.value !== brokerId;
-    option.disabled = isModerator && option.value !== brokerId;
-  }
-  brokerSelect.value = isModerator ? brokerId : 'all';
-  brokerSelect.disabled = isModerator;
+  for (const option of brokerOptions) option.hidden = false;
+  brokerSelect.value = 'all';
+  brokerSelect.disabled = false;
   document.getElementById('scope-description').textContent = isModerator
-    ? 'Moderator: sunt afișate numai documentele brokerului autorizat.'
-    : 'Recenzii, răspunsuri, revizii și raportări pentru toți brokerii.';
+    ? 'Moderator activ: poate modera conținutul conform permisiunilor verificate de Cloud Functions.'
+    : 'Recenzii aprobate și în așteptare pentru toți brokerii. Recenziile publicate sunt vizibile public în aplicație.';
   brokerSelect.dispatchEvent(new Event('change'));
 }
 
@@ -54,63 +49,50 @@ const roleLabel = document.getElementById('admin-role');
 let authRevision = 0;
 let currentRole = null;
 const knownBrokers = ['gcc-asigurari','broker-demo-promoted','broker-demo-standard'];
-// Citește toate paginile, fără a opri afișarea la primele 50 de documente.
-// Fără orderBy suplimentar: cursorul folosește ordinea implicită a ID-urilor.
-async function readAllPages(reference, constraints = [], revision) {
-  const documents = [];
-  let cursor = null;
-  do {
-    if (revision !== authRevision) return [];
-    const parts = [...constraints];
-    if (cursor) parts.push(startAfter(cursor));
-    parts.push(limit(50));
-    const page = await getDocs(query(reference, ...parts));
-    documents.push(...page.docs);
-    if (page.size < 50) break;
-    cursor = page.docs[page.docs.length - 1];
-  } while (cursor);
-  return documents;
-}
-let loadingReviews = false;
 async function loadAdminReviews(isModerator, revision) {
-  if (loadingReviews || !currentRole) return;
-  loadingReviews = true;
-  try {
-    const ids = isModerator ? [authorizedBrokerId] : knownBrokers;
-    if (ids.some(id => !id || !knownBrokers.includes(id))) throw new Error('Broker neautorizat sau necunoscut');
-    const items = [];
-    for (const broker of ids) {
-      for (const reviewStatus of ['approved', 'pending']) {
-        const reviews = await readAllPages(collection(db, 'brokers', broker, 'reviews'), [where('status', '==', reviewStatus)], revision);
-        for (const d of reviews) {
-          const r = d.data();
-          items.push({kind:'review', id:d.id, reviewId:d.id, broker, author:r.authorName || 'Utilizator Google', stars:r.stars || 0, status:r.status, comment:r.comment || ''});
-          const replies = await readAllPages(collection(db,'brokers',broker,'reviews',d.id,'replies'), [], revision);
-          for (const reply of replies) {
-            const v = reply.data();
-            items.push({kind:'reply',id:reply.id,reviewId:d.id,broker,author:v.authorName || 'Utilizator Google',status:v.status,comment:v.comment || '',parentReplyId:v.parentReplyId || null});
-          }
+  const ids = knownBrokers;
+  const items = [];
+  // All queues are read under the active moderator's Firestore security rules.
+  for (const broker of ids) {
+    for (const reviewStatus of ['approved', 'pending']) {
+      const snap = await getDocs(query(collection(db, 'brokers', broker, 'reviews'), where('status', '==', reviewStatus), limit(50)));
+      for (const d of snap.docs) {
+        const r = d.data();
+        items.push({kind:'review', id:d.id, reviewId:d.id, broker, author:r.authorName || 'Utilizator Google', stars:r.stars || 0, status:r.status, comment:r.comment || ''});
+        // Replies are scoped to the review and always have a bounded query.
+        const replies = await getDocs(query(collection(db,'brokers',broker,'reviews',d.id,'replies'),limit(50)));
+        for (const reply of replies.docs) {
+          const v=reply.data();
+          items.push({kind:'reply',id:reply.id,reviewId:d.id,broker,author:v.authorName || 'Utilizator Google',status:v.status,comment:v.comment || '',parentReplyId:v.parentReplyId || null});
         }
       }
-      const revisions = await readAllPages(collection(db,'brokers',broker,'pendingRevisions'), [], revision);
-      for (const d of revisions) {
-        const r = d.data();
-        items.push({kind:'revision',id:d.id,reviewId:d.id,broker,author:'Modificare recenzie',stars:r.stars || 0,status:r.status,comment:r.comment || ''});
-      }
     }
-    // Filtrul pe broker este obligatoriu pentru moderatori, inclusiv la raportări.
-    const reportConstraints = isModerator ? [where('brokerId', '==', authorizedBrokerId)] : [];
-    const reports = await readAllPages(collection(db,'brokerReports'), reportConstraints, revision);
-    for (const d of reports) {
-      const r = d.data();
-      if (!isModerator || r.brokerId === authorizedBrokerId) {
-        items.push({kind:'report',id:d.id,broker:r.brokerId,reviewId:r.reviewId,replyId:r.replyId || null,author:'Raportare',status:r.status,comment:[r.reason,r.details].filter(Boolean).join(' — ')});
-      }
+    const revisions = await getDocs(query(collection(db,'brokers',broker,'pendingRevisions'),limit(50)));
+    for (const d of revisions.docs) {
+      const r=d.data();
+      items.push({kind:'revision',id:d.id,reviewId:d.id,broker,author:'Modificare recenzie',stars:r.stars || 0,status:r.status,comment:r.comment || ''});
     }
-    if (revision !== authRevision) return;
-    window.AutoCheckAdmin.setReviews(items);
-    status.textContent = 'Panou actualizat din Firestore: ' + items.length + ' documente încărcate.';
-  } finally { loadingReviews = false; }
+  }
+  const reports = await getDocs(query(collection(db,'brokerReports'),limit(50)));
+  for (const d of reports.docs) {
+    const r=d.data();
+    // The admin queue contains pending reports only; resolved and dismissed
+    // documents remain in Firestore as evidence.
+    if (r.status !== 'pending') continue;
+    // Do not display orphan reports for reviews/replies already deleted.
+    if (!r.brokerId || !r.reviewId) continue;
+    const review = await getDoc(doc(db,'brokers',r.brokerId,'reviews',r.reviewId));
+    if (!review.exists() || review.get('status') !== 'approved') continue;
+    if (r.contentType === 'reply') {
+      if (!r.replyId) continue;
+      const reply = await getDoc(doc(db,'brokers',r.brokerId,'reviews',r.reviewId,'replies',r.replyId));
+      if (!reply.exists() || reply.get('status') !== 'approved') continue;
+    }
+    items.push({kind:'report',id:d.id,broker:r.brokerId,reviewId:r.reviewId,replyId:r.replyId || null,author:'Raportare',status:r.status,comment:[r.reason,r.details].filter(Boolean).join(' — ')});
+  }
+  if (revision !== authRevision) return;
+  window.AutoCheckAdmin.setReviews(items);
+  status.textContent = 'Panou sincronizat cu Firestore. Sunt afișate maximum 50 de documente per interogare; pentru volume mai mari va fi necesară paginare.';
 }
 
 function lockPanel(message) {
@@ -158,11 +140,6 @@ onAuthStateChanged(auth, async user => {
       lockPanel('Contul Google este conectat, dar nu are un rol administrativ activ. Acces refuzat.');
       return;
     }
-    const moderatorBrokerId = isModerator ? data?.brokerId : null;
-    if (isModerator && (!moderatorBrokerId || !knownBrokers.includes(moderatorBrokerId))) {
-      lockPanel('Moderatorul nu are un broker valid configurat în adminUsers. Acces blocat.');
-      return;
-    }
     currentRole = isAdmin ? 'super_admin' : 'broker_moderator';
     ratingPanel.hidden = !isAdmin;
     window.AutoCheckAdmin.setRole(currentRole);
@@ -170,7 +147,7 @@ onAuthStateChanged(auth, async user => {
     roleLabel.hidden = false;
     demoPanel.hidden = false;
     status.textContent = 'Rol verificat. Se încarcă recenziile aprobate și în așteptare din Firestore...';
-    applyRoleScope(isModerator ? 'broker_moderator' : 'super_admin', moderatorBrokerId);
+    applyRoleScope(isModerator ? 'broker_moderator' : 'super_admin');
     try { await loadAdminReviews(isModerator,revision); }
     catch (readError) {
       if (revision !== authRevision) return;
@@ -203,9 +180,14 @@ logout.addEventListener('click', async () => {
 
 // Client actions are gated by Firestore security rules; UI checks are supplementary.
 window.AutoCheckAdmin.moderate = async (item, decision) => {
-  if (!auth.currentUser || !currentRole || item.status !== 'pending' || (currentRole === 'broker_moderator' && item.broker !== authorizedBrokerId)) throw new Error('Acțiune nepermisă.');
+  if (!auth.currentUser || !currentRole || item.status !== 'pending') throw new Error('Acțiune nepermisă.');
   const uid=auth.currentUser.uid;
-  if (!window.confirm('Confirmi acțiunea de moderare: '+decision+'?')) return false;
+  const message = item.kind === 'report'
+    ? (decision === 'remove_content'
+      ? 'Aprobi raportarea? Conținutul va fi ascuns din aplicație, iar raportările vor rămâne în Firestore ca dovezi.'
+      : 'Respingi raportarea? Conținutul va rămâne public, iar raportarea va fi păstrată în Firestore ca dovadă.')
+    : 'Confirmi acțiunea de moderare: '+decision+'?';
+  if (!window.confirm(message)) return false;
   if (item.kind === 'review' || item.kind === 'revision') {
     await moderateReview({brokerId:item.broker,reviewId:item.reviewId,target:item.kind === 'revision' ? 'revision' : 'review',action:decision});
   } else if (item.kind === 'reply') {
@@ -238,12 +220,3 @@ ratingButton.addEventListener('click', async () => {
     ratingButton.disabled = false;
   }
 });
-
-// Reîmprospătare periodică, fără listeneri multipli sau cereri suprapuse.
-setInterval(() => {
-  if (auth.currentUser && currentRole && !document.hidden) {
-    loadAdminReviews(currentRole === 'broker_moderator', authRevision).catch(error => {
-      status.textContent = 'Actualizarea automată a eșuat (' + (error.code || 'eroare') + ').';
-    });
-  }
-}, 60000);

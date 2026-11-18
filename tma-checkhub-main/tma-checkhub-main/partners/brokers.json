@@ -35,7 +35,7 @@
         "Călătorie"
       ],
       "photo": "https://tmacheckhub.com/partners/images/broker-demo-promoted.webp",
-      "active": true,
+      "active": false,
       "promoted": true,
       "tier": "promoted"
     },
@@ -53,7 +53,7 @@
         "Asistenta Rutiera"
       ],
       "photo": "https://tmacheckhub.com/partners/images/broker-demo-standard.webp",
-      "active": true,
+      "active": false,
       "promoted": false,
       "tier": "standard"
     }
