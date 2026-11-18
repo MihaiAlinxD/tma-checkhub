@@ -16,7 +16,7 @@
         "Călătorie",
         "Asistenta Rutiera"
       ],
-      "photo": "https://mihaialinxd.github.io/tma-checkhub/partners/images/gcc-asigurari.webp",
+      "photo": "https://tmacheckhub.com/partners/images/gcc-asigurari.webp",
       "active": true,
       "promoted": false,
       "tier": "exclusive"
@@ -34,7 +34,7 @@
         "Locuință",
         "Călătorie"
       ],
-      "photo": "https://mihaialinxd.github.io/tma-checkhub/partners/images/broker-demo-promoted.webp",
+      "photo": "https://tmacheckhub.com/partners/images/broker-demo-promoted.webp",
       "active": true,
       "promoted": true,
       "tier": "promoted"
@@ -52,7 +52,7 @@
         "Sănătate",
         "Asistenta Rutiera"
       ],
-      "photo": "https://mihaialinxd.github.io/tma-checkhub/partners/images/broker-demo-standard.webp",
+      "photo": "https://tmacheckhub.com/partners/images/broker-demo-standard.webp",
       "active": true,
       "promoted": false,
       "tier": "standard"
