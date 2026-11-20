@@ -804,3 +804,11 @@ body .marketing-banner :is(p,li,small){color:#e0f4ff!important;-webkit-text-fill
 .autocheck-page .ac-updates .ac-download-actions .ac-qr-block a{padding:9px;border-radius:15px}
 .autocheck-page .ac-updates .ac-download-actions .ac-qr-block img{width:130px;height:130px}
 @media(max-width:767px){.autocheck-page .ac-updates .ac-download-actions{justify-content:center;gap:0}.autocheck-page .ac-updates .ac-download-actions .ac-google-play-badge{flex:0 1 240px}.autocheck-page .ac-updates .ac-download-actions .ac-qr-block{display:none}}
+
+/* AutoCheck QR alignment refinement v39 */
+.autocheck-page .ac-updates .ac-download-actions{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:nowrap;width:fit-content;max-width:100%;margin:28px auto 0;}
+.autocheck-page .ac-updates .ac-download-actions .ac-google-play-badge{display:flex;align-items:center;justify-content:center;flex:0 0 240px;width:240px;margin:0;}
+.autocheck-page .ac-updates .ac-download-actions .ac-qr-block{display:flex;flex:0 0 138px;width:138px;margin:0;align-items:center;justify-content:center;gap:0;}
+.autocheck-page .ac-updates .ac-download-actions .ac-qr-block a{display:block;padding:9px;border-radius:15px;line-height:0;background:#fff;}
+.autocheck-page .ac-updates .ac-download-actions .ac-qr-block img{display:block;width:120px;height:120px;}
+@media(max-width:767px){.autocheck-page .ac-updates .ac-download-actions{justify-content:center;gap:0;flex-wrap:wrap}.autocheck-page .ac-updates .ac-download-actions .ac-google-play-badge{flex:0 1 240px;max-width:100%}.autocheck-page .ac-updates .ac-download-actions .ac-qr-block{display:none}}
