@@ -778,3 +778,11 @@ main p,.section-intro,.ac-updates p,.why-item p,.ac-feature p{color:var(--tma-su
   -webkit-text-fill-color:#e0f4ff;
   opacity:1;
 }
+
+/* v27: direct selectors independent of nesting; explicit foregrounds */
+body .marketing-card, body .marketing-section .marketing-card {background:#12335a!important;border-color:#365f85!important;color:#f4f9ff!important}
+body .marketing-card :is(h1,h2,h3,h4,strong,b,span),body .marketing-section .marketing-card :is(h1,h2,h3,h4,strong,b,span){color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important}
+body .marketing-card :is(p,li,small),body .marketing-card .marketing-muted{color:#dbeaff!important;-webkit-text-fill-color:#dbeaff!important;opacity:1!important}
+body .marketing-banner,body .marketing-section .marketing-banner{background:#10435a!important;border-color:#347d8b!important;color:#f5fbff!important}
+body .marketing-banner :is(h1,h2,h3,h4,strong,b,span){color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important}
+body .marketing-banner :is(p,li,small){color:#e0f4ff!important;-webkit-text-fill-color:#e0f4ff!important;opacity:1!important}
