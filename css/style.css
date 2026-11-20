@@ -866,3 +866,10 @@ body .marketing-banner :is(p,li,small){color:#e0f4ff!important;-webkit-text-fill
 .ac-article a{color:#67e4d6}
 .ac-article .ac-guide-back{display:inline-block;margin-bottom:20px}
 @media(max-width:850px){.ac-guides-grid{grid-template-columns:1fr}.ac-guide-card{padding:20px}}
+
+/* Mobile scroll performance: preserve layout and colors, avoid continuous decorative repaints. */
+@media(max-width:767px){
+  .hero-art .glow-check{animation:none!important;will-change:auto!important}
+  .site-header,.site-header.compact{transition:none!important}
+  .site-header .nav-wrap,.site-header.compact .nav-wrap{transition:none!important}
+}

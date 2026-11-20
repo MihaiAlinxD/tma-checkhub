@@ -25,7 +25,18 @@ const closeMenu=()=>{nav?.classList.remove('open');backdrop?.classList.remove('o
 if(toggle&&nav){toggle.addEventListener('click',()=>{const open=!nav.classList.contains('open');if(open){nav.classList.add('open');backdrop?.classList.add('open');document.body.classList.add('menu-open')}else closeMenu();toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'✕':'☰'});backdrop?.addEventListener('click',closeMenu);nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()})}
 appsToggle?.addEventListener('click',()=>{const expanded=dropdown.classList.toggle('expanded');appsToggle.setAttribute('aria-expanded',String(expanded))});
 document.addEventListener('click',e=>{if(dropdown&&!dropdown.contains(e.target)){dropdown.classList.remove('expanded');appsToggle?.setAttribute('aria-expanded','false')}});
-const onScroll=()=>{header?.classList.toggle('compact',window.scrollY>60);backTop?.classList.toggle('visible',window.scrollY>400)};
+// Limit DOM updates to one animation frame and only when the threshold changes.
+let scrollFrame=0,compactState=null,topState=null;
+const onScroll=()=>{
+  if(scrollFrame)return;
+  scrollFrame=window.requestAnimationFrame(()=>{
+    scrollFrame=0;
+    const y=window.scrollY;
+    const compact=y>60,showTop=y>400;
+    if(compact!==compactState){compactState=compact;header?.classList.toggle('compact',compact)}
+    if(showTop!==topState){topState=showTop;backTop?.classList.toggle('visible',showTop)}
+  });
+};
 window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 backTop?.addEventListener('click',()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'}));
 const motionOK=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
