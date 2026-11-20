@@ -824,7 +824,7 @@ body .marketing-banner :is(p,li,small){color:#e0f4ff!important;-webkit-text-fill
   .ac-updates .ac-updates-copy h2 {margin-top:0!important;}
   .ac-updates .ac-download-actions {
     display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;
-    align-items:center!important;justify-content:flex-end!important;
+    align-items:flex-end!important;justify-content:flex-end!important;
     gap:20px!important;width:auto!important;max-width:none!important;
     margin:0!important;align-self:start!important;
   }
