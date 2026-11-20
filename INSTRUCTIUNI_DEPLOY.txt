@@ -1,0 +1,10 @@
+ACTUALIZARE INCREMENTALĂ – DOAR SITE
+1. Încărcați fișierele din ZIP în rădăcina repository-ului, păstrând căile.
+2. ȘTERGEȚI MANUAL din GitHub directorul autocheck/admin/ (auth.js, index.html, main.js, style.css). ZIP-ul nu poate șterge fișiere din repository.
+3. Păstrați autocheck/tmadmin/ și verificați autentificarea.
+4. Faceți commit și așteptați GitHub Pages.
+
+Modificări: versiune cache CSS v36 pentru paginile site-ului, Schema.org Organization pe prima pagină, SoftwareApplication pe AutoCheck, titlu SEO AutoCheck.
+Nu au fost modificate aplicația Android, Firebase, designul, abonamentele sau textele de marketing.
+Nu s-a adăugat hreflang la paginile traduse din JavaScript deoarece nu sunt URL-uri distincte pentru fiecare limbă.
+Sitemapul și robots.txt au fost verificate; paginile de parteneriate nu sunt în sitemap și au noindex.
