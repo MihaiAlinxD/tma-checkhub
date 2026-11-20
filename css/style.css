@@ -796,3 +796,11 @@ body .marketing-banner :is(p,li,small){color:#e0f4ff!important;-webkit-text-fill
 .autocheck-page .ac-qr-block a{display:block;padding:12px;background:#fff;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
 .autocheck-page .ac-qr-block img{display:block;width:148px;height:148px;border-radius:5px}
 @media(max-width:767px){.autocheck-page .ac-qr-block{display:none}}
+
+/* AutoCheck – Google Play badge and QR, balanced desktop layout */
+.autocheck-page .ac-updates .ac-download-actions{display:flex;align-items:center;justify-content:center;gap:38px;flex-wrap:wrap;margin:28px auto 0;width:100%}
+.autocheck-page .ac-updates .ac-download-actions .ac-google-play-badge{margin:0;flex:0 0 240px}
+.autocheck-page .ac-updates .ac-download-actions .ac-qr-block{margin:0;flex:0 0 auto;gap:6px}
+.autocheck-page .ac-updates .ac-download-actions .ac-qr-block a{padding:9px;border-radius:15px}
+.autocheck-page .ac-updates .ac-download-actions .ac-qr-block img{width:130px;height:130px}
+@media(max-width:767px){.autocheck-page .ac-updates .ac-download-actions{justify-content:center;gap:0}.autocheck-page .ac-updates .ac-download-actions .ac-google-play-badge{flex:0 1 240px}.autocheck-page .ac-updates .ac-download-actions .ac-qr-block{display:none}}
