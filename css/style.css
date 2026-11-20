@@ -786,3 +786,7 @@ body .marketing-card :is(p,li,small),body .marketing-card .marketing-muted{color
 body .marketing-banner,body .marketing-section .marketing-banner{background:#10435a!important;border-color:#347d8b!important;color:#f5fbff!important}
 body .marketing-banner :is(h1,h2,h3,h4,strong,b,span){color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important}
 body .marketing-banner :is(p,li,small){color:#e0f4ff!important;-webkit-text-fill-color:#e0f4ff!important;opacity:1!important}
+
+/* AutoCheck icon: rounded corners in phone mockup and application card */
+.phone-item img[src*="autocheck/app-icon.png"],
+.app-card .app-icon.auto-icon img[src*="autocheck/app-icon.png"]{border-radius:20%;overflow:hidden;}
