@@ -4,7 +4,7 @@
 Arhiva site-ului `tma-checkhub-main (49)(2).zip`, fără acces la proiectul Firebase activ, la regulile publicate, la consola Google Play sau la credențiale. Acesta este un audit STATIC, nu un test de penetrare și nu certifică securitatea producției.
 
 ## Observații
-- Panoul `autocheck/admin/` conține cod client pentru autentificare și administrare. Prezența verificărilor în JavaScript nu garantează autorizarea server-side.
+- Panoul `autocheck/tmadmin/` conține cod client pentru autentificare și administrare. Prezența verificărilor în JavaScript nu garantează autorizarea server-side.
 - `partners/brokers.json` este un catalog public: nu includeți acolo date confidențiale, chei sau informații personale inutile.
 - `partners/GHID_ADMINISTRARE_BROKERI.md` și `broker-template.json` necesită validarea procesului de publicare; modificați doar datele publice aprobate de broker.
 - Controlul accesului la date, recenzii, răspunsuri și moderare trebuie impus în Firestore Security Rules / Cloud Functions, nu doar în interfață.
