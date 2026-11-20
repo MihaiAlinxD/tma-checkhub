@@ -812,3 +812,42 @@ body .marketing-banner :is(p,li,small){color:#e0f4ff!important;-webkit-text-fill
 .autocheck-page .ac-updates .ac-download-actions .ac-qr-block a{display:block;padding:9px;border-radius:15px;line-height:0;background:#fff;}
 .autocheck-page .ac-updates .ac-download-actions .ac-qr-block img{display:block;width:120px;height:120px;}
 @media(max-width:767px){.autocheck-page .ac-updates .ac-download-actions{justify-content:center;gap:0;flex-wrap:wrap}.autocheck-page .ac-updates .ac-download-actions .ac-google-play-badge{flex:0 1 240px;max-width:100%}.autocheck-page .ac-updates .ac-download-actions .ac-qr-block{display:none}}
+
+/* AutoCheck – actualizari: continut stanga, instalare + QR dreapta (v40) */
+@media (min-width: 851px) {
+  .ac-updates .ac-info-panel.ac-updates-layout {
+    display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+    align-items:start!important;column-gap:clamp(28px,4vw,72px)!important;
+    padding:clamp(30px,4vw,52px)!important;
+  }
+  .ac-updates .ac-updates-copy {min-width:0;}
+  .ac-updates .ac-updates-copy h2 {margin-top:0!important;}
+  .ac-updates .ac-download-actions {
+    display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;
+    align-items:center!important;justify-content:flex-end!important;
+    gap:20px!important;width:auto!important;max-width:none!important;
+    margin:0!important;align-self:start!important;
+  }
+  .ac-updates .ac-download-actions .ac-google-play-badge {
+    flex:0 0 185px!important;width:185px!important;max-width:185px!important;margin:0!important;
+  }
+  .ac-updates .ac-download-actions .ac-qr-block {
+    display:flex!important;flex:0 0 128px!important;width:128px!important;
+    margin:0!important;align-items:center!important;justify-content:center!important;
+  }
+  .ac-updates .ac-download-actions .ac-qr-block a {padding:8px!important;border-radius:14px!important;}
+  .ac-updates .ac-download-actions .ac-qr-block img {width:112px!important;height:112px!important;}
+}
+@media (max-width: 1100px) and (min-width:851px) {
+  .ac-updates .ac-download-actions {gap:12px!important;}
+  .ac-updates .ac-download-actions .ac-google-play-badge {flex-basis:145px!important;width:145px!important;max-width:145px!important;}
+  .ac-updates .ac-download-actions .ac-qr-block {flex-basis:110px!important;width:110px!important;}
+  .ac-updates .ac-download-actions .ac-qr-block img {width:94px!important;height:94px!important;}
+}
+@media (max-width:850px) {
+  .ac-updates .ac-info-panel.ac-updates-layout {display:block!important;}
+  .ac-updates .ac-download-actions {display:flex!important;justify-content:flex-start!important;
+    width:100%!important;margin:22px 0 0!important;gap:0!important;}
+  .ac-updates .ac-download-actions .ac-google-play-badge {flex:0 1 200px!important;width:200px!important;}
+  .ac-updates .ac-download-actions .ac-qr-block {display:none!important;}
+}
