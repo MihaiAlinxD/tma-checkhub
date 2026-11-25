@@ -873,3 +873,9 @@ body .marketing-banner :is(p,li,small){color:#e0f4ff!important;-webkit-text-fill
   .site-header,.site-header.compact{transition:none!important}
   .site-header .nav-wrap,.site-header.compact .nav-wrap{transition:none!important}
 }
+
+/* AutoCheck: four equal article cards */
+#sfaturi-auto .ac-guides-grid{grid-template-columns:repeat(4,minmax(0,1fr));align-items:stretch}
+#sfaturi-auto .ac-guide-card{min-width:0;overflow-wrap:anywhere}
+@media(max-width:1050px){#sfaturi-auto .ac-guides-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){#sfaturi-auto .ac-guide-card{padding:12px;gap:8px}#sfaturi-auto .ac-guides-grid{gap:10px}#sfaturi-auto .ac-guide-card h3{font-size:1rem}#sfaturi-auto .ac-guide-card p,#sfaturi-auto .ac-guide-card a{font-size:.85rem}}
